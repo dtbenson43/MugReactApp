@@ -1,0 +1,3 @@
+[submodule "MugGraphqlServer"]
+	path = MugGraphqlServer
+	url = https://github.com/dtbenson43/MugGraphQLServer.git
