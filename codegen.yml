@@ -1,0 +1,15 @@
+schema: 'http://localhost:5019/graphql?sdl'
+documents:
+  - 'src/**/*.tsx'
+  - 'src/gql/operations.gql'
+ignoreNoDocuments: true
+generates:
+  './src/gql/types-and-hooks.tsx':
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+      - add:
+          content:
+            - '/* eslint-disable */'
+            - '// @ts-nocheck'

@@ -1,0 +1,11 @@
+query GetConversations {
+    conversations {
+        conversationId
+        messageId
+        parentId
+        userId
+        text
+        from
+        timestamp
+    }
+}
