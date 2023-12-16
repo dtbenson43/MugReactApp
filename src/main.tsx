@@ -5,7 +5,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./index.css";
 
 const client = new ApolloClient({
-    uri: "http://localhost:5019/graphql/",
+    uri: import.meta.env.VITE_GRAPHL_URL,
     cache: new InMemoryCache(),
 });
 
