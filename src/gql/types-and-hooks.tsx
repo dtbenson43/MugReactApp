@@ -21,6 +21,12 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export enum ApplyPolicy {
+  AfterResolver = 'AFTER_RESOLVER',
+  BeforeResolver = 'BEFORE_RESOLVER',
+  Validation = 'VALIDATION'
+}
+
 export type ConversationMessage = {
   __typename?: 'ConversationMessage';
   conversationId: Scalars['String']['output'];
@@ -32,9 +38,22 @@ export type ConversationMessage = {
   userId: Scalars['String']['output'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  updateZugBobRegistry: UpdateZugBobRegistryPayload;
+};
+
+
+export type MutationUpdateZugBobRegistryArgs = {
+  input: UpdateZugBobRegistryInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   conversations: Array<ConversationMessage>;
+  me: Scalars['String']['output'];
+  simpleTest: Scalars['String']['output'];
+  test: Scalars['String']['output'];
   testDocument?: Maybe<TestDocument>;
   weatherForecast: Array<WeatherForecast>;
 };
@@ -52,12 +71,30 @@ export type TestDocument = {
   uuid: Scalars['String']['output'];
 };
 
+export type UpdateZigBobRegistryPayload = {
+  __typename?: 'UpdateZigBobRegistryPayload';
+  status: Scalars['String']['output'];
+};
+
+export type UpdateZugBobRegistryInput = {
+  zigBob: ZigBobInput;
+};
+
+export type UpdateZugBobRegistryPayload = {
+  __typename?: 'UpdateZugBobRegistryPayload';
+  updateZigBobRegistryPayload?: Maybe<UpdateZigBobRegistryPayload>;
+};
+
 export type WeatherForecast = {
   __typename?: 'WeatherForecast';
   date: Scalars['Date']['output'];
   summary: Scalars['String']['output'];
   temperatureC: Scalars['Int']['output'];
   temperatureF: Scalars['Int']['output'];
+};
+
+export type ZigBobInput = {
+  blomf?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Cosmos_ConversationMessageFilterInput = {
@@ -122,6 +159,11 @@ export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetConversationsQuery = { __typename?: 'Query', conversations: Array<{ __typename?: 'ConversationMessage', conversationId: string, messageId: string, parentId?: string | null, userId: string, text: string, from: string, timestamp: any }> };
 
+export type GetSimpleTestQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSimpleTestQuery = { __typename?: 'Query', simpleTest: string };
+
 
 export const GetConversationsDocument = gql`
     query GetConversations {
@@ -168,3 +210,40 @@ export type GetConversationsQueryHookResult = ReturnType<typeof useGetConversati
 export type GetConversationsLazyQueryHookResult = ReturnType<typeof useGetConversationsLazyQuery>;
 export type GetConversationsSuspenseQueryHookResult = ReturnType<typeof useGetConversationsSuspenseQuery>;
 export type GetConversationsQueryResult = Apollo.QueryResult<GetConversationsQuery, GetConversationsQueryVariables>;
+export const GetSimpleTestDocument = gql`
+    query GetSimpleTest {
+  simpleTest
+}
+    `;
+
+/**
+ * __useGetSimpleTestQuery__
+ *
+ * To run a query within a React component, call `useGetSimpleTestQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSimpleTestQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSimpleTestQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSimpleTestQuery(baseOptions?: Apollo.QueryHookOptions<GetSimpleTestQuery, GetSimpleTestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSimpleTestQuery, GetSimpleTestQueryVariables>(GetSimpleTestDocument, options);
+      }
+export function useGetSimpleTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSimpleTestQuery, GetSimpleTestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSimpleTestQuery, GetSimpleTestQueryVariables>(GetSimpleTestDocument, options);
+        }
+export function useGetSimpleTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSimpleTestQuery, GetSimpleTestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSimpleTestQuery, GetSimpleTestQueryVariables>(GetSimpleTestDocument, options);
+        }
+export type GetSimpleTestQueryHookResult = ReturnType<typeof useGetSimpleTestQuery>;
+export type GetSimpleTestLazyQueryHookResult = ReturnType<typeof useGetSimpleTestLazyQuery>;
+export type GetSimpleTestSuspenseQueryHookResult = ReturnType<typeof useGetSimpleTestSuspenseQuery>;
+export type GetSimpleTestQueryResult = Apollo.QueryResult<GetSimpleTestQuery, GetSimpleTestQueryVariables>;

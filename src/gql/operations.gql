@@ -9,3 +9,7 @@ query GetConversations {
         timestamp
     }
 }
+
+query GetSimpleTest {
+    simpleTest
+}
