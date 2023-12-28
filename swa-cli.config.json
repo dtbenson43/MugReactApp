@@ -2,9 +2,9 @@
   "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
   "configurations": {
     "mug-react-app": {
-      "appDevserverUrl": "http://127.0.0.1:5173",
-      "apiDevserverUrl": "http://127.0.0.1:5019",
-      "run": "npx concurrently \"dotnet watch run --project ./MugGraphqlServer/Mug.csproj --launch-profile http-cli\" \"npm run dev\""
+      "appDevserverUrl": "http://localhost:5173",
+      "apiDevserverUrl": "http://localhost:5019",
+      "run": "npx concurrently \"dotnet watch run --project ./MugGraphqlServer/Mug.csproj --launch-profile http-cli\" \"powershell -Command \"\"sleep 12; npm run dev\"\"\""
     }
   }
 }
