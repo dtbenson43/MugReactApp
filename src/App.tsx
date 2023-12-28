@@ -2,8 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { useApolloClient } from '@apollo/client'
-import { GetSimpleTestDocument, GetSimpleTestQuery, useGetSimpleTestQuery } from './gql/types-and-hooks'
+// import { useApolloClient } from '@apollo/client'
+import { useGetSimpleTestQuery } from './gql/types-and-hooks'
 import { Button } from './components/ui/button'
 import { Configuration, CosmosApi, MugApi } from './api'
 import { Input } from './components/ui/input'
@@ -15,7 +15,7 @@ function App() {
   const result = useGetSimpleTestQuery();
   console.log(result)
 
-  const client = useApolloClient();
+  // const client = useApolloClient();
 
   const apiClient = new MugApi(
     new Configuration({ 
