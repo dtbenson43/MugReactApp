@@ -4,14 +4,14 @@ import App from "./App.tsx";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./index.css";
 
-const client = new ApolloClient({
-    uri: `${import.meta.env.VITE_GRAPHL_URL}/graphql`,
+const gqlClient = new ApolloClient({
+    uri: `${import.meta.env.VITE_BASE_URL}/graphql`,
     cache: new InMemoryCache(),
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ApolloProvider client={client}>
+        <ApolloProvider client={gqlClient}>
             <App />
         </ApolloProvider>
     </React.StrictMode>
