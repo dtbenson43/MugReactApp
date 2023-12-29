@@ -7,6 +7,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "start": "npx swa start",
     "generate-api-client": "npm run generate-client && npm run api-cleanup",
     "api-cleanup": "node clean.js",
     "generate-client": "npx openapi-generator-cli generate -i http://localhost:5019/swagger/v1/swagger.json -g typescript-axios -o ./src/api/",

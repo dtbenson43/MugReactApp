@@ -7,6 +7,7 @@ import { useGetSimpleTestQuery } from './gql/types-and-hooks'
 import { Button } from './components/ui/button'
 import { Configuration, CosmosApi, MugApi } from './api'
 import { Input } from './components/ui/input'
+import useApiClients from './components/ApiProvider/useApiClients'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,20 +17,7 @@ function App() {
   console.log(result)
 
   // const client = useApolloClient();
-
-  const apiClient = new MugApi(
-    new Configuration({ 
-      baseOptions: { withCredentials: true }
-    }),
-    import.meta.env.VITE_BASE_URL
-  );
-  const cosmesApiClient = new CosmosApi(
-    new Configuration({ 
-      baseOptions: { withCredentials: true }
-    }),
-    import.meta.env.VITE_BASE_URL
-  );
-
+  const { mugClient, cosmosClient } = useApiClients()
   return (
     <>
       <div>
@@ -59,7 +47,7 @@ function App() {
         </button>
         <Button onClick={async () => {
           try {
-            const result = await apiClient.loginPost(true, false, {
+            const result = await mugClient.loginPost(true, false, {
               email: email,
               password: password
             })
@@ -70,7 +58,7 @@ function App() {
         }} >Click Me</Button>
         <Button onClick={async () => {
           try {
-            const result = await cosmesApiClient.cosmosCosmostestGet()
+            const result = await cosmosClient.cosmosCosmostestGet()
             console.log(result)
           } catch(err) {
             console.log(err);
