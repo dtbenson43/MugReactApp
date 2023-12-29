@@ -5,7 +5,6 @@ import './App.css'
 // import { useApolloClient } from '@apollo/client'
 import { useGetSimpleTestQuery } from './gql/types-and-hooks'
 import { Button } from './components/ui/button'
-import { Configuration, CosmosApi, MugApi } from './api'
 import { Input } from './components/ui/input'
 import useApiClients from './components/ApiProvider/useApiClients'
 
