@@ -7,6 +7,7 @@ import { useGetSimpleTestQuery } from './gql/types-and-hooks'
 import { Button } from './components/ui/button'
 import { Input } from './components/ui/input'
 import useApiClients from './components/ApiProvider/useApiClients'
+import LoginCard from './components/LoginCard/LoginCard'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,7 +20,7 @@ function App() {
   const { mugClient, cosmosClient } = useApiClients()
   return (
     <>
-      <div>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -69,7 +70,8 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
+      <LoginCard />
     </>
   )
 }
