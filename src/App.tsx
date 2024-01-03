@@ -1,23 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 // import { useApolloClient } from '@apollo/client'
-import { useGetSimpleTestQuery } from './gql/types-and-hooks'
-import { Button } from './components/ui/button'
-import { Input } from './components/ui/input'
-import useApiClients from './components/ApiProvider/useApiClients'
-import LoginCard from './components/LoginCard/LoginCard'
+import { useGetSimpleTestQuery } from "./gql/types-and-hooks";
+import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
+import useApiClients from "./components/ApiProvider/useApiClients";
+import LoginCard from "./components/LoginCard/LoginCard";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const result = useGetSimpleTestQuery();
-  console.log(result)
+  console.log(result);
 
   // const client = useApolloClient();
-  const { mugClient, cosmosClient } = useApiClients()
+  const { mugClient, cosmosClient } = useApiClients();
   return (
     <>
       {/* <div>
@@ -71,9 +79,17 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p> */}
-      <LoginCard />
+      {/* <div className='flex items-center justify-center mx-auto h-screen'>
+        <LoginCard />
+      </div> */}
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent className="pt-0 pb-0">
+            <LoginCard withDialogClose className="w-full shadow-none border-none"/>
+        </DialogContent>
+      </Dialog>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
