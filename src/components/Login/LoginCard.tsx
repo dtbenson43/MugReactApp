@@ -11,32 +11,55 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useApiClients from "../ApiProvider/useApiClients";
 import { cn } from "@/lib/utils";
-import { DialogClose } from "../ui/dialog";
+import { toast } from "sonner";
+import { useUser } from "../UserProvider/useUser";
 
 interface LoginCardProps {
+  thin?: boolean;
   className?: string;
-  withDialogClose?: boolean;
   noHeader?: boolean;
+  closeDialog?: () => void;
 }
 
 const LoginCard: React.FC<LoginCardProps> = ({
-  withDialogClose,
+  thin,
   noHeader,
   className,
+  closeDialog,
 }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
-  const { mugClient } = useApiClients();
+  const { login } = useUser();
 
-  const handleLogin = async () => {
-    const result = await mugClient.loginPost(true, false, {
-      email: email,
-      password: password,
+  const handleLogin = () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    const prom = async () => {
+      const delay = new Promise((resolve) => setTimeout(resolve, 5000));
+      await delay;
+      return login({
+        email: email,
+        password: password,
+      });
+    };
+
+    toast.promise(prom, {
+      loading: "Logging you in...",
+      success: () => {
+        setLoading(false);
+        if (closeDialog) closeDialog();
+        return "Logged in!";
+      },
+      error: () => {
+        setLoading(false);
+        return "Incorrect email/password.";
+      },
     });
-    console.log(result);
   };
 
   return (
@@ -51,12 +74,19 @@ const LoginCard: React.FC<LoginCardProps> = ({
           </>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent
+        className={`${
+          thin
+            ? "w-5/6 mx-auto border border-transparent border-l-black"
+            : ""
+        }`}
+      >
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Email</Label>
               <Input
+                disabled={loading}
                 type="email"
                 id="email"
                 placeholder="Email"
@@ -67,6 +97,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Password</Label>
               <Input
+                disabled={loading}
                 type="password"
                 id="password"
                 placeholder="Password"
@@ -77,15 +108,23 @@ const LoginCard: React.FC<LoginCardProps> = ({
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        {withDialogClose ? (
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
+      <CardFooter
+        className={`flex justify-between ${
+          thin
+            ? "mb-6 pb-0 w-5/6 mx-auto border border-transparent border-l-black"
+            : ""
+        }`}
+      >
+        {closeDialog ? (
+          <Button variant="outline" onClick={closeDialog}>
+            Cancel
+          </Button>
         ) : (
           <div></div>
         )}
-        <Button onClick={handleLogin}>Login</Button>
+        <Button disabled={loading} onClick={handleLogin}>
+          Login
+        </Button>
       </CardFooter>
     </Card>
   );
