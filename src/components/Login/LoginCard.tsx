@@ -32,7 +32,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  const { login } = useUser();
+  const { login, isLoggedIn } = useUser();
 
   const handleLogin = () => {
     if (loading) return;
@@ -52,7 +52,6 @@ const LoginCard: React.FC<LoginCardProps> = ({
       loading: "Logging you in...",
       success: () => {
         setLoading(false);
-        if (closeDialog) closeDialog();
         return "Logged in!";
       },
       error: () => {
@@ -61,6 +60,10 @@ const LoginCard: React.FC<LoginCardProps> = ({
       },
     });
   };
+
+  React.useEffect(() => {
+    if (isLoggedIn && closeDialog) closeDialog();
+  }, [isLoggedIn, closeDialog])
 
   return (
     <Card className={cn("w-[350px]", className)}>

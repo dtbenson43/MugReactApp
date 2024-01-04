@@ -17,7 +17,7 @@ interface UserContextData {
   isLoggedIn: boolean;
   checkUserStatus: () => void;
   login: (loginRequest: LoginRequest) => Promise<AxiosResponse<AccessTokenResponse, unknown> | null>; // Add this line
-
+  logout: () => Promise<void>
 }
 
 interface UserProviderProps {
@@ -64,12 +64,16 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     return prom;
   }, [mugClient]);
 
+  const logout = useCallback(async () => {
+    setUser(null);
+  }, []);
+
   useEffect(() => {
     checkUserLoggedIn();
   }, [checkUserLoggedIn]);
 
   return (
-    <UserContext.Provider value={{ user, isLoading, isLoggedIn: !!user, checkUserStatus: checkUserLoggedIn, login }}>
+    <UserContext.Provider value={{ user, isLoading, isLoggedIn: !!user, checkUserStatus: checkUserLoggedIn, login, logout }}>
       {children}
     </UserContext.Provider>
   );
