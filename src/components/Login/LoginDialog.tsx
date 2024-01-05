@@ -15,7 +15,12 @@ function LoginDialog() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { isLoggedIn, logout } = useUser();
 
-  if (isLoggedIn) return (<Button variant="outline" onClick={logout}>Logout</Button>)
+  if (isLoggedIn)
+    return (
+      <Button variant="outline" onClick={logout}>
+        Logout
+      </Button>
+    );
 
   return (
     <Dialog

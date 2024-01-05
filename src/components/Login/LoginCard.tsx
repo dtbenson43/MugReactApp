@@ -32,38 +32,31 @@ const LoginCard: React.FC<LoginCardProps> = ({
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  const { login, isLoggedIn } = useUser();
+  const { login } = useUser();
+
+  const handleToastSuccessFail = (success: boolean) => {
+    setLoading(false);
+    if (closeDialog) closeDialog();
+    return success ? "Logged in!" : "Incorrect email/password.";
+  };
 
   const handleLogin = () => {
     if (loading) return;
 
     setLoading(true);
 
-    const prom = async () => {
-      const delay = new Promise((resolve) => setTimeout(resolve, 5000));
-      await delay;
-      return login({
+    toast.promise(
+      login({
         email: email,
         password: password,
-      });
-    };
-
-    toast.promise(prom, {
-      loading: "Logging you in...",
-      success: () => {
-        setLoading(false);
-        return "Logged in!";
-      },
-      error: () => {
-        setLoading(false);
-        return "Incorrect email/password.";
-      },
-    });
+      }),
+      {
+        loading: "Logging you in...",
+        success: () => handleToastSuccessFail(true),
+        error: () => handleToastSuccessFail(false),
+      }
+    );
   };
-
-  React.useEffect(() => {
-    if (isLoggedIn && closeDialog) closeDialog();
-  }, [isLoggedIn, closeDialog])
 
   return (
     <Card className={cn("w-[350px]", className)}>
@@ -79,9 +72,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
       </CardHeader>
       <CardContent
         className={`${
-          thin
-            ? "w-5/6 mx-auto border border-transparent border-l-black"
-            : ""
+          thin ? "w-5/6 mx-auto border border-transparent border-l-black" : ""
         }`}
       >
         <form>
