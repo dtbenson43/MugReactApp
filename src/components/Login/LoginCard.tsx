@@ -30,20 +30,16 @@ const LoginCard: React.FC<LoginCardProps> = ({
 }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
 
-  const { login } = useUser();
+  const { login, isLoading } = useUser();
 
   const handleToastSuccessFail = (success: boolean) => {
-    setLoading(false);
-    if (closeDialog) closeDialog();
+    if (success && closeDialog) closeDialog();
     return success ? "Logged in!" : "Incorrect email/password.";
   };
 
   const handleLogin = () => {
-    if (loading) return;
-
-    setLoading(true);
+    if (isLoading) return;
 
     toast.promise(
       login({
@@ -80,7 +76,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Email</Label>
               <Input
-                disabled={loading}
+                disabled={isLoading}
                 type="email"
                 id="email"
                 placeholder="Email"
@@ -91,7 +87,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Password</Label>
               <Input
-                disabled={loading}
+                disabled={isLoading}
                 type="password"
                 id="password"
                 placeholder="Password"
@@ -116,7 +112,7 @@ const LoginCard: React.FC<LoginCardProps> = ({
         ) : (
           <div></div>
         )}
-        <Button disabled={loading} onClick={handleLogin}>
+        <Button disabled={isLoading} onClick={handleLogin}>
           Login
         </Button>
       </CardFooter>
