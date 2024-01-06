@@ -1,4 +1,4 @@
-import LoginDialog from "../Login/LoginDialog";
+import LoginDialog from "../User/LoginDialog";
 
 function Header() {
   return (
