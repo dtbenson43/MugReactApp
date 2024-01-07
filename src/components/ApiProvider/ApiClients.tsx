@@ -1,16 +1,15 @@
 import axios from 'axios';
-import { CosmosApi, MugApi } from "@/api";
+import { CosmosApi } from "@/api";
 
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  withCredentials: true
 });
 
-const mugClient = new MugApi(undefined, undefined, axiosClient);
+// const mugClient = new MugApi(undefined, undefined, axiosClient);
 const cosmosClient = new CosmosApi(undefined, undefined, axiosClient);
 
 const clients = {
-  mugClient,
+  // mugClient,
   cosmosClient
 }
 

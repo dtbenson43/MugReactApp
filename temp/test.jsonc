@@ -1,0 +1,13 @@
+{
+  "previousContent": "Despite the terrible traffic you pull your car into the parking lot of the resort office just on time. Your shift starts in 5 minutes and you know, after working several months as a security guard at this posting, that nothing is worse than having your relief watch show up late. You approach the security booth and Dave, the security guard you're taking over for, leaves the booth and scampers to his car. You begin to greet him \"Hey, Da-.\" He cuts you off \"She's all yours. Notes are on the log as usual. Gotta run, have a chill one.\" You enter the securty booth, arrange your things and review the notes from the previous watch. According to Dave's notes there are a couple things you have left to take care of. You have to secure the gate to the indoor pool and you also have to retrieve a condo key from the office for Margaret Harringbone an owner of one of the resort condominiums.",
+  "previousChoices": {
+    "A": "Secure the gate to the indoor pool.",
+    "B": "Retrieve the key for Margaret Harringbone"
+  },
+  "userChoice": "B",
+  "nextContent": "", // you will complete this
+  "nextChoices": {
+    "A": "", // this will be one path the user can choose
+    "B": "" // this will one another path the user can choose
+  }
+}

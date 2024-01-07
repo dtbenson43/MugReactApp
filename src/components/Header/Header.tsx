@@ -1,6 +1,11 @@
-import LoginDialog from "../User/LoginDialog";
+// import LoginDialog from "../User/LoginDialog";
+import { useAuth0 } from "@auth0/auth0-react";
+
+import { Button } from "../ui/button";
 
 function Header() {
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -8,7 +13,10 @@ function Header() {
           <div className="mr-4 hidden md:flex">Hello this is my website</div>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <div className="w-full flex-1 md:w-auto md:flex-none" />
-            <LoginDialog />
+            {/* <LoginDialog /> */}
+            <Button variant="outline" onClick={() => loginWithRedirect()}>
+              Log In
+            </Button>
           </div>
         </div>
       </header>

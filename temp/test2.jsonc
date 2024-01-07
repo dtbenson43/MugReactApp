@@ -1,0 +1,13 @@
+{
+  "previousContent": "You decide to prioritize retrieving the key for Margaret Harringbone. Making your way to the office, you notice the atmosphere is unusually quiet for this hour. Upon reaching the office, you find the key labeled 'Condo 12B - Harringbone' hanging on the designated key board. Just as you're about to leave the office, you hear a faint sound, like something being dragged across the floor, coming from the direction of the indoor pool. Your instinct as a security guard tells you to investigate, but you also remember your duty to deliver the key to Margaret Harringbone, who might be waiting.",
+  "prevousChoices": {
+    "A": "Investigate the sound coming from the indoor pool area.",
+    "B": "Deliver the key to Margaret Harringbone without delay."
+  },
+  "userChoice": "B",
+  "nextContent": "", // you will complete this
+  "nextChoices": {
+    "A": "", // this will be one path the user can choose
+    "B": "" // this will one another path the user can choose
+  }
+}

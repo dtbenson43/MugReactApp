@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import ApiContext from './ApiContext';
-import { CosmosApi, MugApi } from '@/api';
+import { CosmosApi } from '@/api';
 
-const useApiClients = (): { mugClient: MugApi, cosmosClient: CosmosApi } => {
+const useApiClients = (): { cosmosClient: CosmosApi } => {
   const apiClients = useContext(ApiContext);
 
   if (!apiClients) {
