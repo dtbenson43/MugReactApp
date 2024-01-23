@@ -1,0 +1,40 @@
+.spinload {
+  animation: spin 1500ms linear infinite;
+}
+
+.flashload {
+  animation: flash 1500ms linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    color: dodgerblue;
+  }
+  25% {
+    color: hsl(var(--secondary));
+  }
+  50% {
+    transform: rotate(180deg);
+    color: hsl(var(--background));
+  }
+  75% {
+    color: hsl(var(--secondary));
+  }
+  100% {
+    transform: rotate(360deg);
+    color: dodgerblue;
+  }
+}
+
+@keyframes flash {
+  0% {
+    color: hsl(var(--primary));
+  }
+  50% {
+    color: hsl(var(--secondary));
+  }
+  100% {
+    color: hsl(var(--primary));
+  }
+}

@@ -1,48 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
-import DataProvider from "./components/DataProvider/DataProvider.tsx";
+import DataProvider from "./components/Providers/DataProvider/DataProvider.tsx";
 // import { UserProvider } from "./components/UserProvider/UserProvider.tsx";
-import {
-  // Outlet,
-  RouterProvider,
-  // Link,
-  Router,
-  Route,
-  // RootRoute,
-} from "@tanstack/react-router";
 import { Auth0Provider } from "@auth0/auth0-react";
-
-const indexRoute = new Route({
-  getParentRoute: () => App,
-  path: "/",
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>Welcome Home!</h3>
-      </div>
-    );
-  },
-});
-
-const aboutRoute = new Route({
-  getParentRoute: () => App,
-  path: "/about",
-  component: function About() {
-    return <div className="p-2">Hello from About!</div>;
-  },
-});
-
-const routeTree = App.addChildren([indexRoute, aboutRoute]);
-
-const router = new Router({ routeTree });
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
+import RoutedApp from "./RoutedApp.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -56,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       }}
     >
       <DataProvider>
-        <RouterProvider router={router} />
+        <RoutedApp />
       </DataProvider>
     </Auth0Provider>
   </React.StrictMode>

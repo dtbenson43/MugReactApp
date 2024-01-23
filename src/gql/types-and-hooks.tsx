@@ -27,6 +27,11 @@ export enum ApplyPolicy {
   Validation = 'VALIDATION'
 }
 
+export type Book = {
+  __typename?: 'Book';
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 export type ConversationMessage = {
   __typename?: 'ConversationMessage';
   conversationId: Scalars['String']['output'];
@@ -62,6 +67,11 @@ export type Query = {
 export type QueryConversationsArgs = {
   order?: InputMaybe<Array<Cosmos_ConversationMessageSortInput>>;
   where?: InputMaybe<Cosmos_ConversationMessageFilterInput>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  bookAdded: Book;
 };
 
 export type TestDocument = {

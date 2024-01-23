@@ -1,26 +1,26 @@
 // import { toast } from "sonner";
+import { Auth0ContextInterface, User } from "@auth0/auth0-react";
 import "./App.css";
-import useApiClients from "./components/DataProvider/useApiClients";
-import Header from "./components/Header/Header";
-import { Button } from "./components/ui/button";
+// import useApiClients from "./components/Providers/DataProvider/useApiClients";
+import Header from "./components/ui/Header/Header";
+// import { Button } from "./components/ui/button";
 // import { Button } from "./components/ui/button";
 import { Toaster } from "./components/ui/sonner";
 import {
   Outlet,
+  // RouterHistory,
   // RouterProvider,
-  Link,
   // Router,
   // Route,
-  RootRoute,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+  rootRouteWithContext,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 // import {
 //   MyCustomEvent,
 //   useCustomEventListener,
 //   dispatchCustomEvent,
 // } from "./lib/events";
-
 
 // useCustomEventListener<MyCustomEvent>(
 //   MyCustomEvent,
@@ -34,28 +34,27 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 // Click Me
 // </Button>
 
-const App = new RootRoute({
+interface RouterContext {
+  // The ReturnType of your useAuth hook or the value of your AuthContext
+  auth: Auth0ContextInterface<User>;
+}
+
+const App = rootRouteWithContext<RouterContext>()({
   component: () => {
-    const { cosmosClient } = useApiClients();
+    // const { cosmosClient } = useApiClients();
     return (
-    <>
-      <Header />
-      <Toaster />
-      <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{' '}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-        <Button onClick={async () => {
-          const result = await cosmosClient.cosmosCosmostestGet();
-          console.log(result)
-        }} >test click</Button>
-        <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  )}
+      <>
+        <div className="flex flex-col h-screen">
+          <Header />
+          <main className="flex-grow">
+            <Outlet />
+          </main>
+        </div>
+        <Toaster position="bottom-center" />
+        <TanStackRouterDevtools />
+      </>
+    );
+  },
 });
 
 export default App;
