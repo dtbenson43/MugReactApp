@@ -27,7 +27,7 @@ const Choose = () => {
       </div>
     );
   return (
-    <div className="h-full py-8">
+    <div className="h-full py-6">
       <ChoosePlay />
     </div>
   );
