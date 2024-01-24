@@ -27,7 +27,7 @@ const Choose = () => {
       </div>
     );
   return (
-    <div className="h-full p-10">
+    <div className="h-full pt-8">
       <ChoosePlay />
     </div>
   );
