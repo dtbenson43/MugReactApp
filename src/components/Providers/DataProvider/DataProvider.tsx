@@ -63,7 +63,7 @@ const ApiProvider: FC<ApiClientProviderProps> = ({ children }) => {
           return {
             headers: {
               ...headers,
-              authorization: accessToken,
+              authorization: `Bearer ${accessToken}`,
             },
           };
         });

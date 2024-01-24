@@ -13,3 +13,7 @@ query GetConversations {
 query GetSimpleTest {
     simpleTest
 }
+
+query GetUserId {
+    userId
+}

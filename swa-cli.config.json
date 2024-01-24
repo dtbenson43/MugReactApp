@@ -4,7 +4,7 @@
     "mug-react-app": {
       "appDevserverUrl": "http://localhost:5173",
       "apiDevserverUrl": "http://localhost:5019",
-      "run": "npx concurrently \"dotnet watch run --project ./MugGraphqlServer/Mug.csproj --launch-profile http-cli\" \"powershell -Command \"\"sleep 12; npm run dev\"\"\""
+      "run": "npm run dev"
     }
   }
 }

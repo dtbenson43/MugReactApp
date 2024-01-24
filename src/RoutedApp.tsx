@@ -11,7 +11,7 @@ import {
   // RootRoute,
 } from "@tanstack/react-router";
 import { useAuth0 } from "@auth0/auth0-react";
-import ChoosePlay from "./components/Routes/ChoosePlay/ChoosePlay.tsx";
+import Choose from "./components/Routes/ChoosePlay/Choose.tsx";
 
 const indexRoute = new Route({
   getParentRoute: () => App,
@@ -43,7 +43,7 @@ const chooseRoute = new Route({
   },
   getParentRoute: () => App,
   path: "/choose",
-  component: () => <ChoosePlay />
+  component: () => <Choose />
 });
 
 const routeTree = App.addChildren([indexRoute, aboutRoute, chooseRoute]);

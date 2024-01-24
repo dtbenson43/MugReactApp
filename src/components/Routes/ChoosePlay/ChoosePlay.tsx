@@ -7,70 +7,60 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ChooseButton from "./ChooseButton";
-import { IconLoader2 } from "@tabler/icons-react";
-import { useState } from "react";
-import { Label } from "@/components/ui/label";
 
-const ChoosePlay = () => {
-  const [loading] = useState(true);
-  if (loading)
-    return (
-      <div className="flex flex-col justify-center items-center space-y-4 h-full">
-        <IconLoader2 id="loader" className="spinload" size={100} />
-        <Label htmlFor="loader" className=" text-2xl flashload">Reticulating Splines...</Label>
-      </div>
-    );
-  return (
-    <div className="h-full p-10">
-      <Card>
-        <CardHeader>
-          <CardTitle>Alone In Space</CardTitle>
-          <CardDescription>Survive and save the crew.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test hello from test hello from test hello from
-          test hello from test hello from test hello from test hello from test
-          hello from test hello from test hello from test hello from test hello
-          from test hello from test
-        </CardContent>
-        <CardFooter>
-          <div className="w-full">
-            <div className="flex flex-col">
-              <ChooseButton className="my-2">Choose this option.</ChooseButton>
-              <ChooseButton className="my-2">
-                No, choose this option.
-              </ChooseButton>
-            </div>
+const ChoosePlay = () => (
+  <Card>
+    <CardHeader className="border-b-2">
+      <CardTitle>Alone In Space</CardTitle>
+      <CardDescription>Survive and save the crew.</CardDescription>
+    </CardHeader>
+    <CardContent className="pt-8 px-14">
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test hello from test hello from test hello from test
+      hello from test hello from test hello from test hello from test hello from
+      test hello from test hello from test hello from test hello from test hello
+      from test hello from test
+    </CardContent>
+    <CardFooter className="pt-8 border-t-2">
+      <div className="w-full">
+        <div className="flex flex-col space-y-4">
+          <ChooseButton onClick={() => console.log("hello thanks")}>
+            Choose this option.
+          </ChooseButton>
+          <div className="w-full flex justify-center items-center space-x-8">
+            <div className="w-[2%]" />
+            <div className="border-dotted border-b-4 w-full" />
+            <span className="whitespace-nowrap text-xl font-semibold">OR</span>
+            <div className="border-dotted border-b-4 w-full" />
+            <div className="w-[2%]" />
           </div>
-        </CardFooter>
-      </Card>
-    </div>
-  );
-};
+          <ChooseButton>No, choose this option.</ChooseButton>
+        </div>
+      </div>
+    </CardFooter>
+  </Card>
+);
 
 export default ChoosePlay;

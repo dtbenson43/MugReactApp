@@ -47,7 +47,9 @@ const App = rootRouteWithContext<RouterContext>()({
         <div className="flex flex-col h-screen">
           <Header />
           <main className="flex-grow">
-            <Outlet />
+            <div className="container flex h-14 max-w-screen-2xl items-center">
+              <Outlet />
+            </div>
           </main>
         </div>
         <Toaster position="bottom-center" />
