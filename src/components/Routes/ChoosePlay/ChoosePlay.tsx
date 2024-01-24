@@ -14,7 +14,7 @@ const ChoosePlay = () => (
       <CardTitle>Alone In Space</CardTitle>
       <CardDescription>Survive and save the crew.</CardDescription>
     </CardHeader>
-    <CardContent className="pt-8 px-14">
+    <CardContent className="pt-8 px-4">
       hello from test hello from test hello from test hello from test hello from
       test hello from test hello from test hello from test hello from test hello
       from test hello from test hello from test hello from test hello from test
