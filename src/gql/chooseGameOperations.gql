@@ -1,0 +1,93 @@
+query GetChooseGamesByUserId($userId: String) {
+  chooseGames(where: { userId: { eq: $userId } }) {
+    id
+    userId
+    currentBranch {
+      id
+      text
+      firstOption {
+        text 
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+    previousBranch {
+      id
+      text
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+    branches {
+      id
+      text
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+  }
+}
+
+mutation CreateNewGame($userId: String!) {
+  createNewGame(input: { userId: $userId }) {
+    newGame {
+      id
+      userId
+      currentBranch {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      previousBranch {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      branches {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+    }
+  }
+}

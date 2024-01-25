@@ -17,3 +17,4 @@ query GetSimpleTest {
 query GetUserId {
     userId
 }
+

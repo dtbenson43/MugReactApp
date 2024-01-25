@@ -32,6 +32,30 @@ export type Book = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type ChoiceOption = {
+  __typename?: 'ChoiceOption';
+  nextBranchId: Scalars['String']['output'];
+  text: Scalars['String']['output'];
+};
+
+export type ChooseGame = {
+  __typename?: 'ChooseGame';
+  branches: Array<ChooseGameBranch>;
+  currentBranch: ChooseGameBranch;
+  id: Scalars['String']['output'];
+  previousBranch?: Maybe<ChooseGameBranch>;
+  userId: Scalars['String']['output'];
+};
+
+export type ChooseGameBranch = {
+  __typename?: 'ChooseGameBranch';
+  firstOption: ChoiceOption;
+  id: Scalars['String']['output'];
+  secondOption: ChoiceOption;
+  text: Scalars['String']['output'];
+  userChoice?: Maybe<UserChoiceOption>;
+};
+
 export type ConversationMessage = {
   __typename?: 'ConversationMessage';
   conversationId: Scalars['String']['output'];
@@ -43,9 +67,24 @@ export type ConversationMessage = {
   userId: Scalars['String']['output'];
 };
 
+export type CreateNewGameInput = {
+  userId: Scalars['String']['input'];
+};
+
+export type CreateNewGamePayload = {
+  __typename?: 'CreateNewGamePayload';
+  newGame: ChooseGame;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
+};
+
+
+export type MutationCreateNewGameArgs = {
+  input: CreateNewGameInput;
 };
 
 
@@ -55,6 +94,7 @@ export type MutationUpdateZugBobRegistryArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  chooseGames: Array<ChooseGame>;
   conversations: Array<ConversationMessage>;
   me: Scalars['String']['output'];
   simpleTest: Scalars['String']['output'];
@@ -62,6 +102,12 @@ export type Query = {
   testDocument?: Maybe<TestDocument>;
   userId?: Maybe<Scalars['String']['output']>;
   weatherForecast: Array<WeatherForecast>;
+};
+
+
+export type QueryChooseGamesArgs = {
+  order?: InputMaybe<Array<Cosmos_ChooseGameSortInput>>;
+  where?: InputMaybe<Cosmos_ChooseGameFilterInput>;
 };
 
 
@@ -96,6 +142,11 @@ export type UpdateZugBobRegistryPayload = {
   updateZigBobRegistryPayload?: Maybe<UpdateZigBobRegistryPayload>;
 };
 
+export enum UserChoiceOption {
+  FirstOption = 'FIRST_OPTION',
+  SecondOption = 'SECOND_OPTION'
+}
+
 export type WeatherForecast = {
   __typename?: 'WeatherForecast';
   date: Scalars['Date']['output'];
@@ -106,6 +157,53 @@ export type WeatherForecast = {
 
 export type ZigBobInput = {
   blomf?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cosmos_ChoiceOptionFilterInput = {
+  and?: InputMaybe<Array<Cosmos_ChoiceOptionFilterInput>>;
+  nextBranchId?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  or?: InputMaybe<Array<Cosmos_ChoiceOptionFilterInput>>;
+  text?: InputMaybe<Cosmos_StringOperationFilterInput>;
+};
+
+export type Cosmos_ChoiceOptionSortInput = {
+  nextBranchId?: InputMaybe<Cosmos_SortEnumType>;
+  text?: InputMaybe<Cosmos_SortEnumType>;
+};
+
+export type Cosmos_ChooseGameBranchFilterInput = {
+  and?: InputMaybe<Array<Cosmos_ChooseGameBranchFilterInput>>;
+  firstOption?: InputMaybe<Cosmos_ChoiceOptionFilterInput>;
+  id?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  or?: InputMaybe<Array<Cosmos_ChooseGameBranchFilterInput>>;
+  secondOption?: InputMaybe<Cosmos_ChoiceOptionFilterInput>;
+  text?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  userChoice?: InputMaybe<Cosmos_NullableOfUserChoiceOptionOperationFilterInput>;
+};
+
+export type Cosmos_ChooseGameBranchSortInput = {
+  firstOption?: InputMaybe<Cosmos_ChoiceOptionSortInput>;
+  id?: InputMaybe<Cosmos_SortEnumType>;
+  secondOption?: InputMaybe<Cosmos_ChoiceOptionSortInput>;
+  text?: InputMaybe<Cosmos_SortEnumType>;
+  userChoice?: InputMaybe<Cosmos_SortEnumType>;
+};
+
+export type Cosmos_ChooseGameFilterInput = {
+  and?: InputMaybe<Array<Cosmos_ChooseGameFilterInput>>;
+  branches?: InputMaybe<Cosmos_ListFilterInputTypeOfChooseGameBranchFilterInput>;
+  currentBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+  id?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  or?: InputMaybe<Array<Cosmos_ChooseGameFilterInput>>;
+  previousBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+  userId?: InputMaybe<Cosmos_StringOperationFilterInput>;
+};
+
+export type Cosmos_ChooseGameSortInput = {
+  currentBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
+  id?: InputMaybe<Cosmos_SortEnumType>;
+  previousBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
+  userId?: InputMaybe<Cosmos_SortEnumType>;
 };
 
 export type Cosmos_ConversationMessageFilterInput = {
@@ -145,6 +243,20 @@ export type Cosmos_DateTimeOperationFilterInput = {
   nlte?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type Cosmos_ListFilterInputTypeOfChooseGameBranchFilterInput = {
+  all?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+  any?: InputMaybe<Scalars['Boolean']['input']>;
+  none?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+  some?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+};
+
+export type Cosmos_NullableOfUserChoiceOptionOperationFilterInput = {
+  eq?: InputMaybe<UserChoiceOption>;
+  in?: InputMaybe<Array<InputMaybe<UserChoiceOption>>>;
+  neq?: InputMaybe<UserChoiceOption>;
+  nin?: InputMaybe<Array<InputMaybe<UserChoiceOption>>>;
+};
+
 export enum Cosmos_SortEnumType {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -165,6 +277,20 @@ export type Cosmos_StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetChooseGamesByUserIdQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetChooseGamesByUserIdQuery = { __typename?: 'Query', chooseGames: Array<{ __typename?: 'ChooseGame', id: string, userId: string, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> }> };
+
+export type CreateNewGameMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
+
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -181,6 +307,161 @@ export type GetUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetUserIdQuery = { __typename?: 'Query', userId?: string | null };
 
 
+export const GetChooseGamesByUserIdDocument = gql`
+    query GetChooseGamesByUserId($userId: String) {
+  chooseGames(where: {userId: {eq: $userId}}) {
+    id
+    userId
+    currentBranch {
+      id
+      text
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+    previousBranch {
+      id
+      text
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+    branches {
+      id
+      text
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChooseGamesByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetChooseGamesByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChooseGamesByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChooseGamesByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetChooseGamesByUserIdQuery(baseOptions?: Apollo.QueryHookOptions<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>(GetChooseGamesByUserIdDocument, options);
+      }
+export function useGetChooseGamesByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>(GetChooseGamesByUserIdDocument, options);
+        }
+export function useGetChooseGamesByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>(GetChooseGamesByUserIdDocument, options);
+        }
+export type GetChooseGamesByUserIdQueryHookResult = ReturnType<typeof useGetChooseGamesByUserIdQuery>;
+export type GetChooseGamesByUserIdLazyQueryHookResult = ReturnType<typeof useGetChooseGamesByUserIdLazyQuery>;
+export type GetChooseGamesByUserIdSuspenseQueryHookResult = ReturnType<typeof useGetChooseGamesByUserIdSuspenseQuery>;
+export type GetChooseGamesByUserIdQueryResult = Apollo.QueryResult<GetChooseGamesByUserIdQuery, GetChooseGamesByUserIdQueryVariables>;
+export const CreateNewGameDocument = gql`
+    mutation CreateNewGame($userId: String!) {
+  createNewGame(input: {userId: $userId}) {
+    newGame {
+      id
+      userId
+      currentBranch {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      previousBranch {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      branches {
+        id
+        text
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+    }
+  }
+}
+    `;
+export type CreateNewGameMutationFn = Apollo.MutationFunction<CreateNewGameMutation, CreateNewGameMutationVariables>;
+
+/**
+ * __useCreateNewGameMutation__
+ *
+ * To run a mutation, you first call `useCreateNewGameMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateNewGameMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createNewGameMutation, { data, loading, error }] = useCreateNewGameMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useCreateNewGameMutation(baseOptions?: Apollo.MutationHookOptions<CreateNewGameMutation, CreateNewGameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateNewGameMutation, CreateNewGameMutationVariables>(CreateNewGameDocument, options);
+      }
+export type CreateNewGameMutationHookResult = ReturnType<typeof useCreateNewGameMutation>;
+export type CreateNewGameMutationResult = Apollo.MutationResult<CreateNewGameMutation>;
+export type CreateNewGameMutationOptions = Apollo.BaseMutationOptions<CreateNewGameMutation, CreateNewGameMutationVariables>;
 export const GetConversationsDocument = gql`
     query GetConversations {
   conversations {

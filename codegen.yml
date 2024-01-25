@@ -1,7 +1,7 @@
 schema: 'http://localhost:5019/graphql?sdl'
+overwrite: true
 documents:
-  - 'src/**/*.tsx'
-  - 'src/gql/operations.gql'
+  - 'src/gql/*.gql'
 ignoreNoDocuments: true
 generates:
   './src/gql/types-and-hooks.tsx':
