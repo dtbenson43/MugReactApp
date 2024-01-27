@@ -44,6 +44,7 @@ export type ChooseGame = {
   createdAt: Scalars['DateTime']['output'];
   currentBranch: ChooseGameBranch;
   id: Scalars['String']['output'];
+  initialBranch: ChooseGameBranch;
   lastAccessed: Scalars['DateTime']['output'];
   previousBranch?: Maybe<ChooseGameBranch>;
   title: Scalars['String']['output'];
@@ -201,6 +202,7 @@ export type Cosmos_ChooseGameFilterInput = {
   createdAt?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
   currentBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
   id?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  initialBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
   lastAccessed?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
   or?: InputMaybe<Array<Cosmos_ChooseGameFilterInput>>;
   previousBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
@@ -212,6 +214,7 @@ export type Cosmos_ChooseGameSortInput = {
   createdAt?: InputMaybe<Cosmos_SortEnumType>;
   currentBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
   id?: InputMaybe<Cosmos_SortEnumType>;
+  initialBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
   lastAccessed?: InputMaybe<Cosmos_SortEnumType>;
   previousBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
   title?: InputMaybe<Cosmos_SortEnumType>;
@@ -294,14 +297,14 @@ export type GetChooseGamesByUserIdQueryVariables = Exact<{
 }>;
 
 
-export type GetChooseGamesByUserIdQuery = { __typename?: 'Query', chooseGames: Array<{ __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> }> };
+export type GetChooseGamesByUserIdQuery = { __typename?: 'Query', chooseGames: Array<{ __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, initialBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> }> };
 
 export type CreateNewGameMutationVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
 
 
-export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
+export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, initialBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
 
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -342,6 +345,20 @@ export const GetChooseGamesByUserIdDocument = gql`
       userChoice
     }
     previousBranch {
+      id
+      text
+      createdAt
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
+    initialBranch {
       id
       text
       createdAt
@@ -429,6 +446,20 @@ export const CreateNewGameDocument = gql`
         userChoice
       }
       previousBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      initialBranch {
         id
         text
         createdAt

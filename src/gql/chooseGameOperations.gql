@@ -33,6 +33,20 @@ query GetChooseGamesByUserId($userId: String) {
       }
       userChoice
     }
+    initialBranch {
+      id
+      text
+      createdAt
+      firstOption {
+        text
+        nextBranchId
+      }
+      secondOption {
+        text
+        nextBranchId
+      }
+      userChoice
+    }
     branches {
       id
       text
@@ -73,6 +87,20 @@ mutation CreateNewGame($userId: String!) {
         userChoice
       }
       previousBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      initialBranch {
         id
         text
         createdAt
