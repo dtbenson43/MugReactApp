@@ -67,7 +67,7 @@ const Choose = () => {
   );
 
   // play game
-  if (!loading && !authIsLoading) content = <ChoosePlay currentGame={currentGame} />;
+  if (!loading && !authIsLoading && currentGame) content = <ChoosePlay currentGame={currentGame} />;
 
   // load game if no current game
   if (!loading && !authIsLoading && !currentGame)
