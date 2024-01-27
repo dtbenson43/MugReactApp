@@ -47,7 +47,7 @@ const App = rootRouteWithContext<RouterContext>()({
         <div className="flex flex-col h-screen">
           <Header />
           <main className="flex-grow">
-            <div className="px-6 flex h-full max-w-screen-2xl items-center">
+            <div className="container px-6 flex h-full max-w-screen-2xl items-center">
               <Outlet />
             </div>
           </main>

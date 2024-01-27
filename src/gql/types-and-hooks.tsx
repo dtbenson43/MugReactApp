@@ -41,14 +41,18 @@ export type ChoiceOption = {
 export type ChooseGame = {
   __typename?: 'ChooseGame';
   branches: Array<ChooseGameBranch>;
+  createdAt: Scalars['DateTime']['output'];
   currentBranch: ChooseGameBranch;
   id: Scalars['String']['output'];
+  lastAccessed: Scalars['DateTime']['output'];
   previousBranch?: Maybe<ChooseGameBranch>;
+  title: Scalars['String']['output'];
   userId: Scalars['String']['output'];
 };
 
 export type ChooseGameBranch = {
   __typename?: 'ChooseGameBranch';
+  createdAt: Scalars['DateTime']['output'];
   firstOption: ChoiceOption;
   id: Scalars['String']['output'];
   secondOption: ChoiceOption;
@@ -173,6 +177,7 @@ export type Cosmos_ChoiceOptionSortInput = {
 
 export type Cosmos_ChooseGameBranchFilterInput = {
   and?: InputMaybe<Array<Cosmos_ChooseGameBranchFilterInput>>;
+  createdAt?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
   firstOption?: InputMaybe<Cosmos_ChoiceOptionFilterInput>;
   id?: InputMaybe<Cosmos_StringOperationFilterInput>;
   or?: InputMaybe<Array<Cosmos_ChooseGameBranchFilterInput>>;
@@ -182,6 +187,7 @@ export type Cosmos_ChooseGameBranchFilterInput = {
 };
 
 export type Cosmos_ChooseGameBranchSortInput = {
+  createdAt?: InputMaybe<Cosmos_SortEnumType>;
   firstOption?: InputMaybe<Cosmos_ChoiceOptionSortInput>;
   id?: InputMaybe<Cosmos_SortEnumType>;
   secondOption?: InputMaybe<Cosmos_ChoiceOptionSortInput>;
@@ -192,17 +198,23 @@ export type Cosmos_ChooseGameBranchSortInput = {
 export type Cosmos_ChooseGameFilterInput = {
   and?: InputMaybe<Array<Cosmos_ChooseGameFilterInput>>;
   branches?: InputMaybe<Cosmos_ListFilterInputTypeOfChooseGameBranchFilterInput>;
+  createdAt?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
   currentBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
   id?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  lastAccessed?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
   or?: InputMaybe<Array<Cosmos_ChooseGameFilterInput>>;
   previousBranch?: InputMaybe<Cosmos_ChooseGameBranchFilterInput>;
+  title?: InputMaybe<Cosmos_StringOperationFilterInput>;
   userId?: InputMaybe<Cosmos_StringOperationFilterInput>;
 };
 
 export type Cosmos_ChooseGameSortInput = {
+  createdAt?: InputMaybe<Cosmos_SortEnumType>;
   currentBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
   id?: InputMaybe<Cosmos_SortEnumType>;
+  lastAccessed?: InputMaybe<Cosmos_SortEnumType>;
   previousBranch?: InputMaybe<Cosmos_ChooseGameBranchSortInput>;
+  title?: InputMaybe<Cosmos_SortEnumType>;
   userId?: InputMaybe<Cosmos_SortEnumType>;
 };
 
@@ -282,14 +294,14 @@ export type GetChooseGamesByUserIdQueryVariables = Exact<{
 }>;
 
 
-export type GetChooseGamesByUserIdQuery = { __typename?: 'Query', chooseGames: Array<{ __typename?: 'ChooseGame', id: string, userId: string, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> }> };
+export type GetChooseGamesByUserIdQuery = { __typename?: 'Query', chooseGames: Array<{ __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> }> };
 
 export type CreateNewGameMutationVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
 
 
-export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
+export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
 
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -312,9 +324,13 @@ export const GetChooseGamesByUserIdDocument = gql`
   chooseGames(where: {userId: {eq: $userId}}) {
     id
     userId
+    title
+    createdAt
+    lastAccessed
     currentBranch {
       id
       text
+      createdAt
       firstOption {
         text
         nextBranchId
@@ -328,6 +344,7 @@ export const GetChooseGamesByUserIdDocument = gql`
     previousBranch {
       id
       text
+      createdAt
       firstOption {
         text
         nextBranchId
@@ -341,6 +358,7 @@ export const GetChooseGamesByUserIdDocument = gql`
     branches {
       id
       text
+      createdAt
       firstOption {
         text
         nextBranchId
@@ -393,9 +411,13 @@ export const CreateNewGameDocument = gql`
     newGame {
       id
       userId
+      title
+      createdAt
+      lastAccessed
       currentBranch {
         id
         text
+        createdAt
         firstOption {
           text
           nextBranchId
@@ -409,6 +431,7 @@ export const CreateNewGameDocument = gql`
       previousBranch {
         id
         text
+        createdAt
         firstOption {
           text
           nextBranchId
@@ -422,6 +445,7 @@ export const CreateNewGameDocument = gql`
       branches {
         id
         text
+        createdAt
         firstOption {
           text
           nextBranchId

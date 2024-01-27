@@ -63,6 +63,7 @@ declare module "@tanstack/react-router" {
 
 function RoutedApp() {
   const auth = useAuth0();
+  // if (!import.meta.env.PROD) window.getToken = auth.getAccessTokenSilently
   if (auth.isLoading) return <div></div>
   return <RouterProvider router={router} context={{ auth }} />;
 }

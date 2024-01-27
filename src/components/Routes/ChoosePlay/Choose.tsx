@@ -1,27 +1,32 @@
-import { IconLoader2 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label";
 import ChoosePlay from "./ChoosePlay";
 import { useApolloClient } from "@apollo/client";
 import {
   ChooseGame,
+  CreateNewGameDocument,
+  CreateNewGameMutation,
+  CreateNewGameMutationVariables,
   GetChooseGamesByUserIdDocument,
   GetChooseGamesByUserIdQuery,
   GetChooseGamesByUserIdQueryVariables,
 } from "@/gql/types-and-hooks";
 import { useAuth0 } from "@auth0/auth0-react";
 import ChooseLoad from "./ChooseLoad";
+import Loader from "@/components/ui/loader";
 
 const Choose = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [, setChooseGames] = useState<Array<ChooseGame>>([]);
-  const [currentGame] = useState<ChooseGame | null>(null);
+  const [chooseGames, setChooseGames] = useState<
+    GetChooseGamesByUserIdQuery["chooseGames"]
+  >([]);
+  const [currentGame, setCurrentGame] = useState<ChooseGame | null>(null);
 
   const gql = useApolloClient();
   const { isLoading: authIsLoading, isAuthenticated, user } = useAuth0();
 
   useEffect(() => {
     const fetch = async () => {
+      console.log("fetching");
       try {
         if (user && user.sub) {
           const result = await gql.query<
@@ -30,8 +35,9 @@ const Choose = () => {
           >({
             query: GetChooseGamesByUserIdDocument,
             variables: { userId: user.sub },
+            fetchPolicy: 'network-only'
           });
-          setChooseGames(result.data.chooseGames);
+          setChooseGames(result?.data?.chooseGames ?? []);
         } else {
           throw new Error("missing user id");
         }
@@ -42,29 +48,57 @@ const Choose = () => {
       }
     };
 
-    if (!authIsLoading && isAuthenticated && user && user.sub) {
+    if (
+      !authIsLoading &&
+      isAuthenticated &&
+      user &&
+      user.sub &&
+      !chooseGames.length
+    ) {
       setLoading(true);
       fetch();
     }
-  }, [gql, authIsLoading, isAuthenticated, user]);
+  }, [gql, authIsLoading, isAuthenticated, user, chooseGames]);
 
   // start conditional rendering
 
   // default to loader
   let content = (
-    <div className="flex flex-col justify-center items-center space-y-4 h-full">
-      <IconLoader2 id="loader" className="spinload" size={100} />
-      <Label htmlFor="loader" className=" text-2xl flashload">
-        Reticulating Splines...
-      </Label>
-    </div>
+    <Loader label="Reticulating Splines..." spinnerSize={100} labelSize="2xl" />
   );
-
-  // load game if no current game
-  if (!loading && !authIsLoading && !currentGame) content = <ChooseLoad />;
 
   // play game
   if (!loading && !authIsLoading) content = <ChoosePlay />;
+
+  // load game if no current game
+  if (!loading && !authIsLoading && !currentGame)
+    content = (
+      <ChooseLoad
+        setCurrentGame={setCurrentGame}
+        chooseGames={chooseGames}
+        createNewGame={async () => {
+          let ret = false;
+          if (user && user.sub) {
+            setLoading(true);
+            try {
+              await gql.mutate<CreateNewGameMutation, CreateNewGameMutationVariables>(
+                {
+                  mutation: CreateNewGameDocument,
+                  variables: { userId: user.sub },
+                }
+              );
+              ret = true;
+              setChooseGames([]);
+            } catch {
+              ret = false;
+            } finally {
+              setLoading(false);
+            }
+          }
+          return ret;
+        }}
+      />
+    );
 
   return <div className="h-full py-6 w-full">{content}</div>;
 };
