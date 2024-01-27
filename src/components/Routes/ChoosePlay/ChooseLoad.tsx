@@ -41,8 +41,8 @@ const ChooseLoad = ({
 
         <Accordion type="single" collapsible className="w-full">
           {chooseGames &&
-            chooseGames.map((game) => (
-              <AccordionItem value="item-1" key={game.id}>
+            chooseGames.map((game, i) => (
+              <AccordionItem value={`item-${i}`} key={game.id}>
                 <AccordionTrigger className=" hover:no-underline">
                   <div className="flex flex-col justify-start items-start">
                     <span className=" text-base">{game.title}</span>

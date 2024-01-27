@@ -26,7 +26,6 @@ const Choose = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      console.log("fetching");
       try {
         if (user && user.sub) {
           const result = await gql.query<
