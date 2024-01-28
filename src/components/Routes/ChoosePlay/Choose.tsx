@@ -124,7 +124,7 @@ const Choose = () => {
   );
 
   // load game if no current game
-  if (!loading && !authIsLoading && !currentGame && chooseGames.length)
+  if (!loading && !authIsLoading && !currentGame)
     content = (
       <ChooseLoad
         setCurrentGame={setCurrentGame}
