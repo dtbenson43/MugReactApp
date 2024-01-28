@@ -21,6 +21,16 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AddUserSelectionInput = {
+  choiceId: Scalars['String']['input'];
+  gameId: Scalars['String']['input'];
+};
+
+export type AddUserSelectionPayload = {
+  __typename?: 'AddUserSelectionPayload';
+  updatedGame: ChooseGame;
+};
+
 export enum ApplyPolicy {
   AfterResolver = 'AFTER_RESOLVER',
   BeforeResolver = 'BEFORE_RESOLVER',
@@ -83,8 +93,14 @@ export type CreateNewGamePayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addUserSelection: AddUserSelectionPayload;
   createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
+};
+
+
+export type MutationAddUserSelectionArgs = {
+  input: AddUserSelectionInput;
 };
 
 
@@ -306,6 +322,14 @@ export type CreateNewGameMutationVariables = Exact<{
 
 export type CreateNewGameMutation = { __typename?: 'Mutation', createNewGame: { __typename?: 'CreateNewGamePayload', newGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, initialBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
 
+export type AddUserSelectionMutationVariables = Exact<{
+  gameId: Scalars['String']['input'];
+  choiceId: Scalars['String']['input'];
+}>;
+
+
+export type AddUserSelectionMutation = { __typename?: 'Mutation', addUserSelection: { __typename?: 'AddUserSelectionPayload', updatedGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, initialBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
+
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -517,6 +541,102 @@ export function useCreateNewGameMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateNewGameMutationHookResult = ReturnType<typeof useCreateNewGameMutation>;
 export type CreateNewGameMutationResult = Apollo.MutationResult<CreateNewGameMutation>;
 export type CreateNewGameMutationOptions = Apollo.BaseMutationOptions<CreateNewGameMutation, CreateNewGameMutationVariables>;
+export const AddUserSelectionDocument = gql`
+    mutation AddUserSelection($gameId: String!, $choiceId: String!) {
+  addUserSelection(input: {gameId: $gameId, choiceId: $choiceId}) {
+    updatedGame {
+      id
+      userId
+      title
+      createdAt
+      lastAccessed
+      currentBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      previousBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      initialBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      branches {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+    }
+  }
+}
+    `;
+export type AddUserSelectionMutationFn = Apollo.MutationFunction<AddUserSelectionMutation, AddUserSelectionMutationVariables>;
+
+/**
+ * __useAddUserSelectionMutation__
+ *
+ * To run a mutation, you first call `useAddUserSelectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserSelectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserSelectionMutation, { data, loading, error }] = useAddUserSelectionMutation({
+ *   variables: {
+ *      gameId: // value for 'gameId'
+ *      choiceId: // value for 'choiceId'
+ *   },
+ * });
+ */
+export function useAddUserSelectionMutation(baseOptions?: Apollo.MutationHookOptions<AddUserSelectionMutation, AddUserSelectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddUserSelectionMutation, AddUserSelectionMutationVariables>(AddUserSelectionDocument, options);
+      }
+export type AddUserSelectionMutationHookResult = ReturnType<typeof useAddUserSelectionMutation>;
+export type AddUserSelectionMutationResult = Apollo.MutationResult<AddUserSelectionMutation>;
+export type AddUserSelectionMutationOptions = Apollo.BaseMutationOptions<AddUserSelectionMutation, AddUserSelectionMutationVariables>;
 export const GetConversationsDocument = gql`
     query GetConversations {
   conversations {

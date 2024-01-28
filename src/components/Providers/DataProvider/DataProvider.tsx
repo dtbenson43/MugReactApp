@@ -20,6 +20,7 @@ interface ApiClientProviderProps {
 const ApiProvider: FC<ApiClientProviderProps> = ({ children }) => {
   const [apiClients, setApiClients] = useState(clients);
   const [apolloClient, setApolloClient] = useState(defaultGqlClient);
+  const [authClients, setAuthClients] = useState(false);
 
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
@@ -27,6 +28,7 @@ const ApiProvider: FC<ApiClientProviderProps> = ({ children }) => {
     const updateClients = async () => {
       if (!isAuthenticated) {
         // set default clients
+        setAuthClients(false);
         setApiClients(clients);
         setApolloClient(defaultGqlClient);
       } else {
@@ -74,13 +76,14 @@ const ApiProvider: FC<ApiClientProviderProps> = ({ children }) => {
         });
 
         setApolloClient(apolloClient);
+        setAuthClients(true);
       }
     };
     updateClients();
   }, [user, isAuthenticated, getAccessTokenSilently]);
 
   return (
-    <ApiContext.Provider value={apiClients}>
+    <ApiContext.Provider value={{ clients: apiClients, isAuthClients: authClients}}>
       <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
     </ApiContext.Provider>
   );

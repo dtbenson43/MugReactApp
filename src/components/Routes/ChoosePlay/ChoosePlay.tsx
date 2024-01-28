@@ -11,9 +11,10 @@ import { ChooseGame } from "@/gql/types-and-hooks";
 
 interface ChoosePlayProps {
   currentGame: ChooseGame;
+  addUserSelection: (gameId: string, choiceId: string) => Promise<boolean>;
 }
 
-const ChoosePlay = ({ currentGame }: ChoosePlayProps) => (
+const ChoosePlay = ({ currentGame, addUserSelection }: ChoosePlayProps) => (
   <Card>
     <CardHeader className="border-b-2">
       <CardTitle>Alone In Space</CardTitle>
@@ -25,7 +26,14 @@ const ChoosePlay = ({ currentGame }: ChoosePlayProps) => (
     <CardFooter className="pt-8 border-t-2">
       <div className="w-full">
         <div className="flex flex-col space-y-4">
-          <ChooseButton onClick={() => console.log("hello thanks")}>
+          <ChooseButton
+            onClick={() =>
+              addUserSelection(
+                currentGame.id,
+                currentGame.currentBranch.firstOption.nextBranchId
+              )
+            }
+          >
             {currentGame.currentBranch.firstOption.text}
           </ChooseButton>
           <div className="w-full flex justify-center items-center space-x-8">
@@ -35,7 +43,16 @@ const ChoosePlay = ({ currentGame }: ChoosePlayProps) => (
             <div className="border-dotted border-b-4 w-full" />
             <div className="w-[2%]" />
           </div>
-          <ChooseButton>{currentGame.currentBranch.secondOption.text}</ChooseButton>
+          <ChooseButton
+            onClick={() =>
+              addUserSelection(
+                currentGame.id,
+                currentGame.currentBranch.secondOption.nextBranchId
+              )
+            }
+          >
+            {currentGame.currentBranch.secondOption.text}
+          </ChooseButton>
         </div>
       </div>
     </CardFooter>

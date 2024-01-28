@@ -131,3 +131,71 @@ mutation CreateNewGame($userId: String!) {
     }
   }
 }
+
+mutation AddUserSelection($gameId: String!, $choiceId: String!) {
+  addUserSelection(input: { gameId: $gameId, choiceId: $choiceId }) {
+    updatedGame {
+      id
+      userId
+      title
+      createdAt
+      lastAccessed
+      currentBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      previousBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      initialBranch {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+      branches {
+        id
+        text
+        createdAt
+        firstOption {
+          text
+          nextBranchId
+        }
+        secondOption {
+          text
+          nextBranchId
+        }
+        userChoice
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import ApiContext from './ApiContext';
 import { CosmosApi } from '@/api';
 
-const useApiClients = (): { cosmosClient: CosmosApi } => {
+const useApiClients = ():{ clients: { cosmosClient: CosmosApi }, isAuthClients: boolean }=> {
   const apiClients = useContext(ApiContext);
 
   if (!apiClients) {

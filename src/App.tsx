@@ -53,7 +53,7 @@ const App = rootRouteWithContext<RouterContext>()({
           </main>
         </div>
         <Toaster position="bottom-center" />
-        <TanStackRouterDevtools />
+        {!import.meta.env.PROD && <TanStackRouterDevtools />}
       </>
     );
   },
