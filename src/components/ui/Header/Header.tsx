@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import nlogo from '../../../assets/n.svg';
 
 function Header() {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
@@ -32,12 +33,7 @@ function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <div className="mr-4 hidden md:flex">
-            <span className="select-none px-[0.3em] font-bold text-xl text-white bg-black">
-              N
-            </span>
-            <span className="select-none px-[0.3em] font-bold text-xl translate-x-[-1.28em]">
-              S
-            </span>
+            <img src={nlogo} className="h-6 pr-10" alt="N logo" />
             <Link to="/" className="text-slate-400 px-3 [&.active]:text-black">
               Home
             </Link>
