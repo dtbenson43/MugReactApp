@@ -5,6 +5,7 @@ import DataProvider from "./components/Providers/DataProvider/DataProvider.tsx";
 // import { UserProvider } from "./components/UserProvider/UserProvider.tsx";
 import { Auth0Provider } from "@auth0/auth0-react";
 import RoutedApp from "./RoutedApp.tsx";
+import { ThemeProvider } from "@/components/Providers/ThemeProvider/ThemeProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       }}
     >
       <DataProvider>
-        <RoutedApp />
+        <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+          <RoutedApp />
+        </ThemeProvider>
       </DataProvider>
     </Auth0Provider>
   </React.StrictMode>
