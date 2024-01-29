@@ -42,6 +42,15 @@ export type Book = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type ChatResponseInput = {
+  prompt: Scalars['String']['input'];
+};
+
+export type ChatResponsePayload = {
+  __typename?: 'ChatResponsePayload';
+  getChatResponsePayload?: Maybe<GetChatResponsePayload>;
+};
+
 export type ChoiceOption = {
   __typename?: 'ChoiceOption';
   nextBranchId: Scalars['String']['output'];
@@ -91,9 +100,15 @@ export type CreateNewGamePayload = {
   newGame: ChooseGame;
 };
 
+export type GetChatResponsePayload = {
+  __typename?: 'GetChatResponsePayload';
+  chatResult?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addUserSelection: AddUserSelectionPayload;
+  chatResponse: ChatResponsePayload;
   createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
 };
@@ -101,6 +116,11 @@ export type Mutation = {
 
 export type MutationAddUserSelectionArgs = {
   input: AddUserSelectionInput;
+};
+
+
+export type MutationChatResponseArgs = {
+  input: ChatResponseInput;
 };
 
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import ChoosePlay from "./ChoosePlay";
+import { Suspense, lazy, useEffect, useState } from "react";
+// import ChoosePlay from "./ChoosePlay";
 import { useApolloClient } from "@apollo/client";
 import {
   AddUserSelectionDocument,
@@ -14,12 +14,12 @@ import {
   GetChooseGamesByUserIdQueryVariables,
 } from "@/gql/types-and-hooks";
 import { useAuth0 } from "@auth0/auth0-react";
-import ChooseLoad from "./ChooseLoad";
+// import ChooseLoad from "./ChooseLoad";
 import Loader from "@/components/ui/loader";
 import useApiClients from "@/components/Providers/DataProvider/useApiClients";
 
 const Choose = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [chooseGames, setChooseGames] = useState<
     GetChooseGamesByUserIdQuery["chooseGames"]
   >([]);
@@ -39,7 +39,7 @@ const Choose = () => {
           >({
             query: GetChooseGamesByUserIdDocument,
             variables: { userId: user.sub },
-            fetchPolicy: 'network-only'
+            fetchPolicy: "network-only",
           });
           setChooseGames(result?.data?.chooseGames ?? []);
         } else {
@@ -92,12 +92,13 @@ const Choose = () => {
     if (user && user.sub) {
       setLoading(true);
       try {
-        const result = await gql.mutate<AddUserSelectionMutation, AddUserSelectionInput>(
-          {
-            mutation: AddUserSelectionDocument,
-            variables: { gameId, choiceId },
-          }
-        );
+        const result = await gql.mutate<
+          AddUserSelectionMutation,
+          AddUserSelectionInput
+        >({
+          mutation: AddUserSelectionDocument,
+          variables: { gameId, choiceId },
+        });
         ret = true;
         const updatedGame = result.data?.addUserSelection?.updatedGame;
         if (updatedGame == null) throw new Error("Game failed to update.");
@@ -111,29 +112,49 @@ const Choose = () => {
     return ret;
   };
 
-  // start conditional rendering
-
-  // default to loader
-  let content = (
+  const loader = (
     <Loader label="Reticulating Splines..." spinnerSize={100} labelSize="2xl" />
   );
 
-  // play game
-  if (!loading && !authIsLoading && currentGame) content = (
-    <ChoosePlay currentGame={currentGame} addUserSelection={addUserSelection} />
+  const ChooseLoad = lazy(() => import('./ChooseLoad'));
+  const chooseLoad = (
+    <ChooseLoad
+      setCurrentGame={setCurrentGame}
+      chooseGames={chooseGames}
+      createNewGame={createNewGame}
+    />
   );
 
-  // load game if no current game
-  if (!loading && !authIsLoading && !currentGame)
-    content = (
-      <ChooseLoad
-        setCurrentGame={setCurrentGame}
-        chooseGames={chooseGames}
-        createNewGame={createNewGame}
-      />
-    );
+  const ChoosePlay = lazy(() => import('./ChoosePlay'));
+  const choosePlay = (
+    <ChoosePlay
+      currentGame={currentGame!}
+      addUserSelection={addUserSelection}
+    />
+  );
 
-  return <div className="h-full py-6 w-full">{content}</div>;
+  // start conditional rendering
+  // default to loader
+  let content = loader;
+
+  // play game
+  if (!loading && !authIsLoading && currentGame && isAuthenticated)
+    content = choosePlay;
+
+  // load game if no current game
+  if (!loading && !authIsLoading && !currentGame && isAuthenticated)
+    content = chooseLoad;
+
+  if (!loading && !authIsLoading && !isAuthenticated)
+    content = <span className="flex justify-center">Must be logged in.</span>;
+
+  return (
+    <div className="h-full py-6 w-full">
+      <Suspense fallback={loader}>
+        {content}
+      </Suspense>
+    </div>
+  );
 };
 
 export default Choose;

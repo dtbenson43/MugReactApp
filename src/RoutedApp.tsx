@@ -16,13 +16,7 @@ import Choose from "./components/Routes/ChoosePlay/Choose.tsx";
 const indexRoute = new Route({
   getParentRoute: () => App,
   path: "/",
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>Welcome Home!</h3>
-      </div>
-    );
-  },
+  component: () => <Choose />,
 });
 
 const aboutRoute = new Route({

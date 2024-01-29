@@ -1,20 +1,20 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
-import { toast } from "sonner";
+// import { Link } from "@tanstack/react-router";
+// import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ModeToggle } from "../mode-toggle";
 
 function Header() {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
-  const authCheck = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (!isAuthenticated) {
-      e.preventDefault();
-      toast.error("Must be logged in");
-    }
-  };
+  // const authCheck = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   if (!isAuthenticated) {
+  //     e.preventDefault();
+  //     toast.error("Must be logged in");
+  //   }
+  // };
 
   const loginButton = (
     <Button variant="outline" onClick={() => loginWithRedirect()}>
@@ -35,10 +35,12 @@ function Header() {
           <div className="mr-4 hidden md:flex">
             <div className="text-foreground h-6 pr-10">
               <div className="scale-x-110 scale-90 -translate-y-1">
-                <span className="font-sans text-2xl font-semibold select-none">N</span>
+                <span className="font-sans text-2xl font-semibold select-none">
+                  N
+                </span>
               </div>
             </div>
-            <Link
+            {/* <Link
               to="/"
               className="text-slate-400 px-3 [&.active]:text-foreground"
             >
@@ -56,7 +58,16 @@ function Header() {
               className="text-slate-400 px-3 [&.active]:text-foreground"
             >
               About
-            </Link>
+            </Link> */}
+          </div>
+          <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 py-2 mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden">
+            <div className="text-foreground h-6 pr-10">
+              <div className="scale-x-110 scale-90 -translate-y-1">
+                <span className="font-sans text-2xl font-semibold select-none">
+                  N
+                </span>
+              </div>
+            </div>
           </div>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <div className="w-full flex-1 md:w-auto md:flex-none"> </div>
