@@ -77,10 +77,10 @@ const Choose = () => {
           }
         );
         ret = true;
+        setLoading(false);
         setChooseGames([]);
       } catch {
         ret = false;
-      } finally {
         setLoading(false);
       }
     }
