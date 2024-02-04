@@ -27,14 +27,16 @@ function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <div className="mr-4 hidden md:flex">
-            <Logo />
+            <div className="pr-10">
+              <Logo />
+            </div>
             <nav className="flex items-center gap-6 font-semibold">
               <NavLinks />
             </nav>
           </div>
           <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 py-2 mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden">
             <div className="text-foreground h-6 pr-10">
-            <IconMenu2
+              <IconMenu2
                 onClick={() =>
                   dispatchCustomEvent<SideMenuEvent>(SideMenuEvent, {
                     open: true,
