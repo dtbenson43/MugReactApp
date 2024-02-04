@@ -47,8 +47,8 @@ const App = rootRouteWithContext<RouterContext>()({
       <>
         <div className="flex flex-col h-screen">
           <Header />
-          <main className="flex-grow">
-            <div style={{ height: 'calc(100% - 3.5rem)' }} className="container px-6 flex max-w-screen-2xl items-center">
+          <main style={{ height: 'calc(100% - 3.5rem)' }}  className="flex-grow">
+            <div className="container px-6 flex max-w-screen-2xl items-center">
               <Outlet />
             </div>
           </main>
