@@ -45,9 +45,9 @@ const App = rootRouteWithContext<RouterContext>()({
     // const { cosmosClient } = useApiClients();
     return (
       <>
-        <div className="flex flex-col h-screen">
+        <div className="relative flex flex-col min-h-screen bg-background">
           <Header />
-          <main style={{ height: 'calc(100% - 3.5rem)' }}  className="flex-grow">
+          <main className="flex-1">
             <div className="container px-6 flex max-w-screen-2xl items-center">
               <Outlet />
             </div>
