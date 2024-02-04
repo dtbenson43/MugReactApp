@@ -2,7 +2,7 @@
 import { Auth0ContextInterface, User } from "@auth0/auth0-react";
 import "./App.css";
 // import useApiClients from "./components/Providers/DataProvider/useApiClients";
-import Header from "./components/ui/Header/Header";
+import Header from "./components/ui/header";
 // import { Button } from "./components/ui/button";
 // import { Button } from "./components/ui/button";
 import { Toaster } from "./components/ui/sonner";
@@ -15,6 +15,7 @@ import {
   rootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import SideMenu from "./components/ui/sidemenu";
 
 // import {
 //   MyCustomEvent,
@@ -52,6 +53,7 @@ const App = rootRouteWithContext<RouterContext>()({
             </div>
           </main>
         </div>
+        <SideMenu />
         <Toaster position="bottom-center" />
         {!import.meta.env.PROD && <TanStackRouterDevtools />}
       </>
