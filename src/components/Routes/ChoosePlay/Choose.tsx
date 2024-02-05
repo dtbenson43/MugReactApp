@@ -124,19 +124,23 @@ const Choose = () => {
 
   const ChooseLoad = lazy(() => import("./ChooseLoad"));
   const chooseLoad = (
-    <ChooseLoad
-      setCurrentGame={setCurrentGame}
-      chooseGames={chooseGames}
-      createNewGame={createNewGame}
-    />
+    <div className="py-6">
+      <ChooseLoad
+        setCurrentGame={setCurrentGame}
+        chooseGames={chooseGames}
+        createNewGame={createNewGame}
+      />
+    </div>
   );
 
   const ChoosePlay = lazy(() => import("./ChoosePlay"));
   const choosePlay = (
-    <ChoosePlay
-      currentGame={currentGame!}
-      addUserSelection={addUserSelection}
-    />
+    <div className="py-6">
+      <ChoosePlay
+        currentGame={currentGame!}
+        addUserSelection={addUserSelection}
+      />
+    </div>
   );
 
   // start conditional rendering
@@ -154,9 +158,7 @@ const Choose = () => {
   if (!loading && !authIsLoading && !isAuthenticated)
     content = <span className="flex justify-center">Must be logged in.</span>;
 
-  return (
-      <Suspense fallback={loader}>{content}</Suspense>
-  );
+  return <Suspense fallback={loader}>{content}</Suspense>;
 };
 
 export default Choose;
