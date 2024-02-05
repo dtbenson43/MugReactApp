@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-router";
 import { useAuth0 } from "@auth0/auth0-react";
 import Choose from "./components/Routes/ChoosePlay/Choose.tsx";
+import About from "./components/Routes/ChoosePlay/About/About.tsx";
 
 const indexRoute = new Route({
   getParentRoute: () => App,
@@ -22,13 +23,7 @@ const indexRoute = new Route({
 const aboutRoute = new Route({
   getParentRoute: () => App,
   path: "/about",
-  component: function About() {
-    return (
-      <div className="h-full">
-        <div className="p-2">Hello from About!</div>
-      </div>
-    );
-  },
+  component: () =>  <About />,
 });
 
 const chooseRoute = new Route({
