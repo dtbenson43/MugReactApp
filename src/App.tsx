@@ -47,10 +47,8 @@ const App = rootRouteWithContext<RouterContext>()({
       <>
         <div className="relative flex flex-col min-h-screen bg-background">
           <Header />
-          <main className="flex-1">
-            <div className="container px-6 flex max-w-screen-2xl items-center">
-              <Outlet />
-            </div>
+          <main className="container px-6 flex-1 flex flex-col">
+            <Outlet />
           </main>
         </div>
         <SideMenu />

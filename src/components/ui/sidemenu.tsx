@@ -1,8 +1,13 @@
-import { SideMenuEvent, useCustomEventListener } from "@/lib/events";
+import { useCustomEventListener } from "@/lib/events";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader } from "./sheet";
 import Logo from "./logo";
 import NavLinks from "./navlinks";
+
+export interface SideMenuEvent {
+  open: boolean
+}
+export const SideMenuEvent = "sideMenuEvent";
 
 function SideMenu() {
   const [open, setOpen] = useState(false);
@@ -23,7 +28,7 @@ function SideMenu() {
               <span className="mt-0 font-extralight">Novustoria</span>
             </div>
           </SheetHeader>
-          <div className="mt-2 border border-b-1 w-full" />
+          <div className="mt-2 border border-border/40 border-b-1 w-full" />
           <nav className="mt-4 ml-8 flex flex-col gap-3">
             <NavLinks />
           </nav>

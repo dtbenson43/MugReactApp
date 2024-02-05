@@ -23,7 +23,11 @@ const aboutRoute = new Route({
   getParentRoute: () => App,
   path: "/about",
   component: function About() {
-    return <div className="p-2">Hello from About!</div>;
+    return (
+      <div className="h-full">
+        <div className="p-2">Hello from About!</div>
+      </div>
+    );
   },
 });
 
@@ -37,7 +41,7 @@ const chooseRoute = new Route({
   },
   getParentRoute: () => App,
   path: "/choose",
-  component: () => <Choose />
+  component: () => <Choose />,
 });
 
 const routeTree = App.addChildren([indexRoute, aboutRoute, chooseRoute]);
@@ -58,7 +62,7 @@ declare module "@tanstack/react-router" {
 function RoutedApp() {
   const auth = useAuth0();
   // if (!import.meta.env.PROD) window.getToken = auth.getAccessTokenSilently
-  if (auth.isLoading) return <div></div>
+  if (auth.isLoading) return <div></div>;
   return <RouterProvider router={router} context={{ auth }} />;
 }
 

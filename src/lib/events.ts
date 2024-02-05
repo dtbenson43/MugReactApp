@@ -1,15 +1,5 @@
 import { useEffect } from "react";
 
-export interface MyCustomEvent {
-  data: string
-}
-export const MyCustomEvent = "myCustomEventType";
-
-export interface SideMenuEvent {
-  open: boolean
-}
-export const SideMenuEvent = "sideMenuEvent";
-
 export const useCustomEventListener = <T,>(eventName: string, eventHandler: (detail: T) => void) => {
   useEffect(() => {
       const handler = (event: Event) => {

@@ -113,10 +113,16 @@ const Choose = () => {
   };
 
   const loader = (
-    <Loader label="Reticulating Splines..." spinnerSize={100} labelSize="2xl" />
+    <div className="flex-1 flex flex-col justify-center">
+      <Loader
+        label="Reticulating Splines..."
+        spinnerSize={100}
+        labelSize="2xl"
+      />
+    </div>
   );
 
-  const ChooseLoad = lazy(() => import('./ChooseLoad'));
+  const ChooseLoad = lazy(() => import("./ChooseLoad"));
   const chooseLoad = (
     <ChooseLoad
       setCurrentGame={setCurrentGame}
@@ -125,7 +131,7 @@ const Choose = () => {
     />
   );
 
-  const ChoosePlay = lazy(() => import('./ChoosePlay'));
+  const ChoosePlay = lazy(() => import("./ChoosePlay"));
   const choosePlay = (
     <ChoosePlay
       currentGame={currentGame!}
@@ -149,11 +155,7 @@ const Choose = () => {
     content = <span className="flex justify-center">Must be logged in.</span>;
 
   return (
-    <div className="h-full py-6 w-full">
-      <Suspense fallback={loader}>
-        {content}
-      </Suspense>
-    </div>
+      <Suspense fallback={loader}>{content}</Suspense>
   );
 };
 

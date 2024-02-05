@@ -22,10 +22,10 @@ interface LoaderProps {
 }
 
 const Loader = ({ spinnerSize, label, labelSize = "base" }: LoaderProps) => (
-  <div className="flex flex-col justify-center items-center space-y-4 h-full">
-    <IconLoader2 id="loader" className="spinload" size={spinnerSize} />
+  <div id="loader" className="flex flex-col justify-center items-center space-y-4 h-full">
+    <IconLoader2 className="spinload" size={spinnerSize} />
     {label && (
-      <Label htmlFor="loader" className={`text-${labelSize} flashload`}>
+      <Label className={`text-${labelSize} flashload`}>
         {label}
       </Label>
     )}

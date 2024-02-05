@@ -1,7 +1,8 @@
-import { SideMenuEvent, dispatchCustomEvent } from "@/lib/events";
+import { dispatchCustomEvent } from "@/lib/events";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { SideMenuEvent } from "./sidemenu";
 
 export default function NavLinks() {
   const { isAuthenticated } = useAuth0();

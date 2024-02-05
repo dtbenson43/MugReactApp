@@ -5,7 +5,8 @@ import { ModeToggle } from "./mode-toggle";
 import Logo from "./logo";
 import NavLinks from "./navlinks";
 import { IconMenu2 } from "@tabler/icons-react";
-import { SideMenuEvent, dispatchCustomEvent } from "@/lib/events";
+import { dispatchCustomEvent } from "@/lib/events";
+import { SideMenuEvent } from "./sidemenu";
 
 function Header() {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
