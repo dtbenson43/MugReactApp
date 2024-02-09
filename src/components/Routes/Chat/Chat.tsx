@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 const Chat = () => {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [gettingHeight, setGettingHeight] = useState(true);
+  const [, setGettingHeight] = useState(true);
   // const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<GetMessagesByChannelQuery["chat"]>([]);
   const [name, setName] = useState("");
@@ -89,7 +89,7 @@ const Chat = () => {
             : "flex-1 h-full w-full py-6"
         }
       >
-        {(loading) && (
+        {loading && (
           <Loader
             label={loading ? "Loading" : "Resizing"}
             spinnerSize={100}
