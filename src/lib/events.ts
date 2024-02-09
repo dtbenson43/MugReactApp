@@ -18,3 +18,8 @@ export const dispatchCustomEvent = <T>(eventName: string, detail: T) => {
   const event = new CustomEvent<T>(eventName, { detail });
   window.dispatchEvent(event);
 }
+
+export interface SideMenuEvent {
+  open: boolean
+}
+export const SideMenuEvent = "sideMenuEvent";

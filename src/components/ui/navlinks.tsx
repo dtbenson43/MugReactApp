@@ -1,8 +1,7 @@
-import { dispatchCustomEvent } from "@/lib/events";
+import { SideMenuEvent, dispatchCustomEvent } from "@/lib/events";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { SideMenuEvent } from "./sidemenu";
 
 export default function NavLinks() {
   const { isAuthenticated } = useAuth0();
@@ -29,6 +28,10 @@ export default function NavLinks() {
       route: "/about",
       label: "About",
     },
+    {
+      route: "/chat",
+      label: "Chat"
+    }
   ].map((l) => {
     const c = `transition-colors hover:text-foreground/80 text-foreground${
       !matchRoute({ to: l.route }) ? "/60" : ""

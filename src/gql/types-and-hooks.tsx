@@ -21,6 +21,17 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AddChatMessageInput = {
+  channel: Scalars['String']['input'];
+  message: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type AddChatMessagePayload = {
+  __typename?: 'AddChatMessagePayload';
+  addedMessage: ChatMessage;
+};
+
 export type AddUserSelectionInput = {
   choiceId: Scalars['String']['input'];
   gameId: Scalars['String']['input'];
@@ -40,6 +51,16 @@ export enum ApplyPolicy {
 export type Book = {
   __typename?: 'Book';
   name?: Maybe<Scalars['String']['output']>;
+};
+
+export type ChatMessage = {
+  __typename?: 'ChatMessage';
+  channel: Scalars['String']['output'];
+  dateTime: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
 };
 
 export type ChatResponseInput = {
@@ -107,10 +128,16 @@ export type GetChatResponsePayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addChatMessage: AddChatMessagePayload;
   addUserSelection: AddUserSelectionPayload;
   chatResponse: ChatResponsePayload;
   createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
+};
+
+
+export type MutationAddChatMessageArgs = {
+  input: AddChatMessageInput;
 };
 
 
@@ -135,6 +162,7 @@ export type MutationUpdateZugBobRegistryArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  chat: Array<ChatMessage>;
   chooseGames: Array<ChooseGame>;
   conversations: Array<ConversationMessage>;
   me: Scalars['String']['output'];
@@ -143,6 +171,12 @@ export type Query = {
   testDocument?: Maybe<TestDocument>;
   userId?: Maybe<Scalars['String']['output']>;
   weatherForecast: Array<WeatherForecast>;
+};
+
+
+export type QueryChatArgs = {
+  order?: InputMaybe<Array<Cosmos_ChatMessageSortInput>>;
+  where?: InputMaybe<Cosmos_ChatMessageFilterInput>;
 };
 
 
@@ -160,6 +194,12 @@ export type QueryConversationsArgs = {
 export type Subscription = {
   __typename?: 'Subscription';
   bookAdded: Book;
+  chatMessageAdded: ChatMessage;
+};
+
+
+export type SubscriptionChatMessageAddedArgs = {
+  channel: Scalars['String']['input'];
 };
 
 export type TestDocument = {
@@ -198,6 +238,26 @@ export type WeatherForecast = {
 
 export type ZigBobInput = {
   blomf?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cosmos_ChatMessageFilterInput = {
+  and?: InputMaybe<Array<Cosmos_ChatMessageFilterInput>>;
+  channel?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  dateTime?: InputMaybe<Cosmos_DateTimeOperationFilterInput>;
+  id?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  message?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  name?: InputMaybe<Cosmos_StringOperationFilterInput>;
+  or?: InputMaybe<Array<Cosmos_ChatMessageFilterInput>>;
+  userId?: InputMaybe<Cosmos_StringOperationFilterInput>;
+};
+
+export type Cosmos_ChatMessageSortInput = {
+  channel?: InputMaybe<Cosmos_SortEnumType>;
+  dateTime?: InputMaybe<Cosmos_SortEnumType>;
+  id?: InputMaybe<Cosmos_SortEnumType>;
+  message?: InputMaybe<Cosmos_SortEnumType>;
+  name?: InputMaybe<Cosmos_SortEnumType>;
+  userId?: InputMaybe<Cosmos_SortEnumType>;
 };
 
 export type Cosmos_ChoiceOptionFilterInput = {
@@ -328,6 +388,29 @@ export type Cosmos_StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type SubscribeToChannelSubscriptionVariables = Exact<{
+  channel: Scalars['String']['input'];
+}>;
+
+
+export type SubscribeToChannelSubscription = { __typename?: 'Subscription', chatMessageAdded: { __typename?: 'ChatMessage', id: string, name: string, message: string, channel: string, dateTime: any } };
+
+export type AddChatMessageMutationVariables = Exact<{
+  channel: Scalars['String']['input'];
+  message: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type AddChatMessageMutation = { __typename?: 'Mutation', addChatMessage: { __typename?: 'AddChatMessagePayload', addedMessage: { __typename?: 'ChatMessage', id: string, name: string, message: string, channel: string, dateTime: any } } };
+
+export type GetMessagesByChannelQueryVariables = Exact<{
+  channel: Scalars['String']['input'];
+}>;
+
+
+export type GetMessagesByChannelQuery = { __typename?: 'Query', chat: Array<{ __typename?: 'ChatMessage', id: string, name: string, message: string, channel: string, dateTime: any }> };
+
 export type GetChooseGamesByUserIdQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -366,6 +449,125 @@ export type GetUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetUserIdQuery = { __typename?: 'Query', userId?: string | null };
 
 
+export const SubscribeToChannelDocument = gql`
+    subscription SubscribeToChannel($channel: String!) {
+  chatMessageAdded(channel: $channel) {
+    id
+    name
+    message
+    channel
+    dateTime
+  }
+}
+    `;
+
+/**
+ * __useSubscribeToChannelSubscription__
+ *
+ * To run a query within a React component, call `useSubscribeToChannelSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeToChannelSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscribeToChannelSubscription({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSubscribeToChannelSubscription(baseOptions: Apollo.SubscriptionHookOptions<SubscribeToChannelSubscription, SubscribeToChannelSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<SubscribeToChannelSubscription, SubscribeToChannelSubscriptionVariables>(SubscribeToChannelDocument, options);
+      }
+export type SubscribeToChannelSubscriptionHookResult = ReturnType<typeof useSubscribeToChannelSubscription>;
+export type SubscribeToChannelSubscriptionResult = Apollo.SubscriptionResult<SubscribeToChannelSubscription>;
+export const AddChatMessageDocument = gql`
+    mutation AddChatMessage($channel: String!, $message: String!, $name: String!) {
+  addChatMessage(input: {channel: $channel, message: $message, name: $name}) {
+    addedMessage {
+      id
+      name
+      message
+      channel
+      dateTime
+    }
+  }
+}
+    `;
+export type AddChatMessageMutationFn = Apollo.MutationFunction<AddChatMessageMutation, AddChatMessageMutationVariables>;
+
+/**
+ * __useAddChatMessageMutation__
+ *
+ * To run a mutation, you first call `useAddChatMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddChatMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addChatMessageMutation, { data, loading, error }] = useAddChatMessageMutation({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *      message: // value for 'message'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useAddChatMessageMutation(baseOptions?: Apollo.MutationHookOptions<AddChatMessageMutation, AddChatMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddChatMessageMutation, AddChatMessageMutationVariables>(AddChatMessageDocument, options);
+      }
+export type AddChatMessageMutationHookResult = ReturnType<typeof useAddChatMessageMutation>;
+export type AddChatMessageMutationResult = Apollo.MutationResult<AddChatMessageMutation>;
+export type AddChatMessageMutationOptions = Apollo.BaseMutationOptions<AddChatMessageMutation, AddChatMessageMutationVariables>;
+export const GetMessagesByChannelDocument = gql`
+    query GetMessagesByChannel($channel: String!) {
+  chat(where: {channel: {eq: $channel}}) {
+    id
+    name
+    message
+    channel
+    dateTime
+  }
+}
+    `;
+
+/**
+ * __useGetMessagesByChannelQuery__
+ *
+ * To run a query within a React component, call `useGetMessagesByChannelQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessagesByChannelQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessagesByChannelQuery({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useGetMessagesByChannelQuery(baseOptions: Apollo.QueryHookOptions<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>(GetMessagesByChannelDocument, options);
+      }
+export function useGetMessagesByChannelLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>(GetMessagesByChannelDocument, options);
+        }
+export function useGetMessagesByChannelSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>(GetMessagesByChannelDocument, options);
+        }
+export type GetMessagesByChannelQueryHookResult = ReturnType<typeof useGetMessagesByChannelQuery>;
+export type GetMessagesByChannelLazyQueryHookResult = ReturnType<typeof useGetMessagesByChannelLazyQuery>;
+export type GetMessagesByChannelSuspenseQueryHookResult = ReturnType<typeof useGetMessagesByChannelSuspenseQuery>;
+export type GetMessagesByChannelQueryResult = Apollo.QueryResult<GetMessagesByChannelQuery, GetMessagesByChannelQueryVariables>;
 export const GetChooseGamesByUserIdDocument = gql`
     query GetChooseGamesByUserId($userId: String) {
   chooseGames(where: {userId: {eq: $userId}}) {

@@ -12,7 +12,8 @@ import {
 } from "@tanstack/react-router";
 import { useAuth0 } from "@auth0/auth0-react";
 import Choose from "./components/Routes/ChoosePlay/Choose.tsx";
-import About from "./components/Routes/ChoosePlay/About/About.tsx";
+import About from "./components/Routes/About/About.tsx";
+import Chat from "./components/Routes/Chat/Chat.tsx";
 
 const indexRoute = new Route({
   getParentRoute: () => App,
@@ -39,7 +40,13 @@ const chooseRoute = new Route({
   component: () => <Choose />,
 });
 
-const routeTree = App.addChildren([indexRoute, aboutRoute, chooseRoute]);
+const chatRoute = new Route({
+  getParentRoute: () => App,
+  path: "/chat",
+  component: () => <Chat />
+})
+
+const routeTree = App.addChildren([indexRoute, aboutRoute, chooseRoute, chatRoute]);
 
 const router = new Router({
   routeTree,

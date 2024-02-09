@@ -1,13 +1,8 @@
-import { useCustomEventListener } from "@/lib/events";
+import { SideMenuEvent, useCustomEventListener } from "@/lib/events";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader } from "./sheet";
 import Logo from "./logo";
 import NavLinks from "./navlinks";
-
-export interface SideMenuEvent {
-  open: boolean
-}
-export const SideMenuEvent = "sideMenuEvent";
 
 function SideMenu() {
   const [open, setOpen] = useState(false);

@@ -9,9 +9,13 @@ import {
   ApolloProvider,
   InMemoryCache,
   createHttpLink,
+  split,
 } from "@apollo/client";
 import defaultGqlClient from "@/gql/apolloClient";
 import { setContext } from "@apollo/client/link/context";
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from "graphql-ws";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 interface ApiClientProviderProps {
   children: ReactNode;
@@ -70,8 +74,29 @@ const ApiProvider: FC<ApiClientProviderProps> = ({ children }) => {
           };
         });
 
+        // WebSocket link for subscriptions
+        const wsLink = new GraphQLWsLink(createClient({
+          url: `${import.meta.env.VITE_GRAPHQL_WS}`,
+          connectionParams: {
+            authorization: `Bearer ${accessToken}`
+          }
+        }));
+
+        // Using split to route queries/mutations and subscriptions to their respective links
+        const splitLink = split(
+          ({ query }) => {
+            const definition = getMainDefinition(query);
+            return (
+              definition.kind === 'OperationDefinition' &&
+              definition.operation === 'subscription'
+            );
+          },
+          wsLink,
+          authLink.concat(httpLink),
+        );
+
         const apolloClient = new ApolloClient({
-          link: authLink.concat(httpLink),
+          link: splitLink,
           cache: new InMemoryCache(),
         });
 

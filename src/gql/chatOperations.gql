@@ -1,0 +1,31 @@
+subscription SubscribeToChannel($channel: String!) {
+  chatMessageAdded(channel: $channel) {
+    id
+    name
+    message
+    channel
+    dateTime
+  }
+}
+
+mutation AddChatMessage($channel: String!, $message: String!, $name: String!) {
+  addChatMessage(input: { channel: $channel, message: $message, name: $name }) {
+    addedMessage {
+      id
+      name
+      message
+      channel
+      dateTime
+    }
+  }
+}
+
+query GetMessagesByChannel($channel: String!) {
+  chat(where: { channel: { eq: $channel } }) {
+    id
+    name
+    message
+    channel
+    dateTime
+  }
+}
