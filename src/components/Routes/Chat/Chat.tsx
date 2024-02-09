@@ -96,8 +96,8 @@ const Chat = () => {
             labelSize="xl"
           />
         )}
-        <>
-          {!loading && (
+        {!loading && (
+          <>
             <div>
               <ScrollArea
                 style={{ height: `${screenHeight - 250}px` }}
@@ -112,31 +112,31 @@ const Chat = () => {
                 </div>
               </ScrollArea>
             </div>
-          )}
-          <Input
-            className="mt-4 max-w-sm"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div className="flex 1-full items-start space-x-2 my-4">
-            <Textarea
-              className=" max-h-[100px]"
-              placeholder="Type your message here."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  postChatMessage();
-                }
-              }}
+            <Input
+              className="mt-4 max-w-sm"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-            <Button type="submit" onClick={() => postChatMessage()}>
-              Send
-            </Button>
-          </div>
-        </>
+            <div className="flex 1-full items-start space-x-2 my-4">
+              <Textarea
+                className=" max-h-[100px]"
+                placeholder="Type your message here."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    postChatMessage();
+                  }
+                }}
+              />
+              <Button type="submit" onClick={() => postChatMessage()}>
+                Send
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
