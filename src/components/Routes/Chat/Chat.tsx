@@ -84,12 +84,12 @@ const Chat = () => {
     <>
       <div
         className={
-          gettingHeight || loading
+          loading
             ? "flex-1 flex flex-col justify-center h-full w-full py-6"
             : "flex-1 h-full w-full py-6"
         }
       >
-        {(gettingHeight || loading) && (
+        {(loading) && (
           <Loader
             label={loading ? "Loading" : "Resizing"}
             spinnerSize={100}
@@ -97,7 +97,7 @@ const Chat = () => {
           />
         )}
         <>
-          {!gettingHeight && !loading && (
+          {!loading && (
             <div>
               <ScrollArea
                 style={{ height: `${screenHeight - 250}px` }}
