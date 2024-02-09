@@ -19,9 +19,11 @@ const Chat = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const { data: chatMessageData } = useSubscribeToChannelSubscription({
+  const { data: chatMessageData, error } = useSubscribeToChannelSubscription({
     variables: { channel: "test" },
   });
+
+  console.log(error);
 
   useEffect(() => {
     if (chatMessageData && chatMessageData.chatMessageAdded) {
