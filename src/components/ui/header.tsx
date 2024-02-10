@@ -1,13 +1,19 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ModeToggle } from "./mode-toggle";
 import Logo from "./logo";
 import NavLinks from "./navlinks";
 import { IconMenu2 } from "@tabler/icons-react";
 import { SideMenuEvent, dispatchCustomEvent } from "@/lib/events";
+import { Suspense, lazy } from "react";
+import { IconSunMoon } from "@tabler/icons-react";
 
 function Header() {
+  const ModeToggle = lazy(() =>
+    import("./mode-toggle").then((module) => ({
+      default: module.ModeToggle,
+    }))
+  );
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   const loginButton = (
@@ -20,6 +26,13 @@ function Header() {
     <Avatar>
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
+  );
+
+  const themeFallback = (
+    <Button variant="outline" size="icon">
+      <IconSunMoon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 
   return (
@@ -49,7 +62,9 @@ function Header() {
             <div className="w-full flex-1 md:w-auto md:flex-none"> </div>
             {isAuthenticated && avatar}
             {!isAuthenticated && loginButton}
-            <ModeToggle />
+            <Suspense fallback={themeFallback}>
+              <ModeToggle />
+            </Suspense>
           </div>
         </div>
       </header>

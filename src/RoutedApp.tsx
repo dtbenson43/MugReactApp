@@ -3,7 +3,6 @@ import "./index.css";
 // import { UserProvider } from "./components/UserProvider/UserProvider.tsx";
 import {
   // Outlet,
-  RouterProvider,
   // Link,
   Router,
   Route,
@@ -11,20 +10,39 @@ import {
   // RootRoute,
 } from "@tanstack/react-router";
 import { useAuth0 } from "@auth0/auth0-react";
-import Choose from "./components/Routes/ChoosePlay/Choose.tsx";
-import About from "./components/Routes/About/About.tsx";
-import Chat from "./components/Routes/Chat/Chat.tsx";
+import Loader from "./components/ui/loader.tsx";
+import { Suspense, lazy } from "react";
+
+const loader = (
+  <div className="flex-1 flex flex-col justify-center h-full w-full py-6">
+    <Loader label="loading" spinnerSize={100} labelSize="xl" />
+  </div>
+);
 
 const indexRoute = new Route({
   getParentRoute: () => App,
   path: "/",
-  component: () => <Choose />,
+  component: () => {
+    const About = lazy(() => import("./components/Routes/About/About.tsx"));
+    return (
+      <Suspense fallback={loader}>
+        <About />
+      </Suspense>
+    );
+  },
 });
 
 const aboutRoute = new Route({
   getParentRoute: () => App,
   path: "/about",
-  component: () =>  <About />,
+  component: () => {
+    const About = lazy(() => import("./components/Routes/About/About.tsx"));
+    return (
+      <Suspense fallback={loader}>
+        <About />
+      </Suspense>
+    );
+  },
 });
 
 const chooseRoute = new Route({
@@ -37,16 +55,37 @@ const chooseRoute = new Route({
   },
   getParentRoute: () => App,
   path: "/choose",
-  component: () => <Choose />,
+  component: () => {
+    const Choose = lazy(
+      () => import("./components/Routes/ChoosePlay/Choose.tsx")
+    );
+    return (
+      <Suspense fallback={loader}>
+        <Choose />
+      </Suspense>
+    );
+  },
 });
 
 const chatRoute = new Route({
   getParentRoute: () => App,
   path: "/chat",
-  component: () => <Chat />
-})
+  component: () => {
+    const Chat = lazy(() => import("./components/Routes/Chat/Chat.tsx"));
+    return (
+      <Suspense fallback={loader}>
+        <Chat />
+      </Suspense>
+    );
+  },
+});
 
-const routeTree = App.addChildren([indexRoute, aboutRoute, chooseRoute, chatRoute]);
+const routeTree = App.addChildren([
+  indexRoute,
+  aboutRoute,
+  chooseRoute,
+  chatRoute,
+]);
 
 const router = new Router({
   routeTree,
@@ -62,10 +101,20 @@ declare module "@tanstack/react-router" {
 }
 
 function RoutedApp() {
+  const RouterProvider = lazy(() =>
+    import("@tanstack/react-router").then((module) => ({
+      default: module.RouterProvider,
+    }))
+  );
   const auth = useAuth0();
   // if (!import.meta.env.PROD) window.getToken = auth.getAccessTokenSilently
-  if (auth.isLoading) return <div></div>;
-  return <RouterProvider router={router} context={{ auth }} />;
+  let content = <div className="h-screen flex flex-col justify-center items-center">{loader}</div>
+  if (!auth.isLoading) content = <RouterProvider router={router} context={{ auth }} />;
+  return (
+    <Suspense fallback={loader}>
+      {content}
+    </Suspense>
+  );
 }
 
 export default RoutedApp;

@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import {
   GetMessagesByChannelQuery,
@@ -9,9 +7,22 @@ import {
   useGetMessagesByChannelQuery,
   useSubscribeToChannelSubscription,
 } from "@/gql/types-and-hooks";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Chat = () => {
+  const ScrollArea = lazy(() =>
+    import("@/components/ui/scroll-area").then((module) => ({
+      default: module.ScrollArea,
+    }))
+  );
+
+  const Input = lazy(() =>
+    import("@/components/ui/input").then((module) => ({
+      default: module.Input,
+    }))
+  );
+
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [, setGettingHeight] = useState(true);
   // const [loading, setLoading] = useState(false);
@@ -70,7 +81,13 @@ const Chat = () => {
   }, []);
 
   const postChatMessage = async () => {
-    if (name && name.length && message && message.trim()) {
+    const trimmedName = name.trim();
+    if (!trimmedName || !trimmedName.length || trimmedName.length < 3) {
+      toast.error("name must be at least 3 characters");
+      return;
+    }
+
+    if (message && message.trim()) {
       try {
         await addChatMessage({ variables: { channel: "test", name, message } });
         setMessage("");
@@ -80,15 +97,19 @@ const Chat = () => {
     }
   };
 
-  return (
+  const loader = (
+    <div className="flex-1 flex flex-col justify-center h-full w-full py-6">
+      <Loader
+        label={loading ? "Loading" : "Resizing"}
+        spinnerSize={100}
+        labelSize="xl"
+      />
+    </div>
+  );
+
+  const chatComp = (
     <>
-      <div
-        className={
-          loading
-            ? "flex-1 flex flex-col justify-center h-full w-full py-6"
-            : "flex-1 h-full w-full py-6"
-        }
-      >
+      <div className="flex-1 h-full w-full py-6">
         {loading && (
           <Loader
             label={loading ? "Loading" : "Resizing"}
@@ -140,6 +161,11 @@ const Chat = () => {
       </div>
     </>
   );
+
+  let content = loader;
+  if (!loading) content = chatComp;
+
+  return <Suspense fallback={loader}>{content}</Suspense>;
 };
 
 export default Chat;

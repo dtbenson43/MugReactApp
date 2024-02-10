@@ -19,6 +19,9 @@ import Loader from "@/components/ui/loader";
 import useApiClients from "@/components/Providers/DataProvider/useApiClients";
 
 const Choose = () => {
+  const ChooseLoad = lazy(() => import("./ChooseLoad"));
+  const ChoosePlay = lazy(() => import("./ChoosePlay"));
+  
   const [loading, setLoading] = useState<boolean>(false);
   const [chooseGames, setChooseGames] = useState<
     GetChooseGamesByUserIdQuery["chooseGames"]
@@ -122,7 +125,6 @@ const Choose = () => {
     </div>
   );
 
-  const ChooseLoad = lazy(() => import("./ChooseLoad"));
   const chooseLoad = (
     <div className="py-6">
       <ChooseLoad
@@ -133,7 +135,7 @@ const Choose = () => {
     </div>
   );
 
-  const ChoosePlay = lazy(() => import("./ChoosePlay"));
+
   const choosePlay = (
     <div className="py-6">
       <ChoosePlay
@@ -152,10 +154,10 @@ const Choose = () => {
     content = choosePlay;
 
   // load game if no current game
-  if (!loading && !authIsLoading && !currentGame && isAuthenticated)
+  else if (!loading && !authIsLoading && !currentGame && isAuthenticated)
     content = chooseLoad;
 
-  if (!loading && !authIsLoading && !isAuthenticated)
+  else if (!loading && !authIsLoading && !isAuthenticated)
     content = <span className="flex justify-center">Must be logged in.</span>;
 
   return <Suspense fallback={loader}>{content}</Suspense>;
