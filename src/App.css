@@ -1,3 +1,8 @@
+body {
+  overflow-y: scroll;
+
+}
+
 .spinload {
   animation: spin 1500ms linear infinite;
 }

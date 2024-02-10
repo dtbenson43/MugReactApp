@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/gql/types-and-hooks";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Chat = () => {
   const ScrollArea = lazy(() =>
@@ -17,14 +19,8 @@ const Chat = () => {
     }))
   );
 
-  const Input = lazy(() =>
-    import("@/components/ui/input").then((module) => ({
-      default: module.Input,
-    }))
-  );
-
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [, setGettingHeight] = useState(true);
+  const [gettingHeight, setGettingHeight] = useState(true);
   // const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<GetMessagesByChannelQuery["chat"]>([]);
   const [name, setName] = useState("");
@@ -60,12 +56,14 @@ const Chat = () => {
 
   useEffect(() => {
     // Function to update the state with the current window height
+    let debounce: NodeJS.Timeout = null!;
     const handleResize = () => {
       setGettingHeight(true);
-      setTimeout(() => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
         setScreenHeight(window.innerHeight);
         setGettingHeight(false);
-      });
+      }, 300);
     };
 
     // Add the event listener for the resize event
@@ -99,65 +97,72 @@ const Chat = () => {
 
   const loader = (
     <div className="flex-1 flex flex-col justify-center h-full w-full py-6">
-      <Loader
-        label={"44444444"}
-        spinnerSize={100}
-        labelSize="xl"
-      />
+      <Loader label="Loading" spinnerSize={100} labelSize="xl" />
+    </div>
+  );
+
+  const resizeFallback = (
+    <div
+      className={`flex-1 h-[${
+        Math.max(screenHeight, 500) - 250
+      }px] w-full border rounded-md overflow-hidden`}
+    >
+      <Skeleton className="mb-2 mt-6 mx-4 h-4 w-[200px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[310px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[240px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[330px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[320px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[250px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[200px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[290px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[240px]" />
+      <Skeleton className="my-2 mx-4 h-4 w-[300px]" />
     </div>
   );
 
   const chatComp = (
     <>
-      <div className="flex-1 h-full w-full py-6">
-        {loading && (
-          <Loader
-            label={loading ? "Loading" : "Resizing"}
-            spinnerSize={100}
-            labelSize="xl"
+      <div className="flex-1 flex flex-col h-full w-full py-6">
+        <Suspense fallback={resizeFallback}>
+          {gettingHeight && resizeFallback}
+          {!gettingHeight && (
+            <ScrollArea
+              style={{ height: `${Math.max(screenHeight, 500) - 250}px` }}
+              className={"w-100 rounded-md border"}
+            >
+              <div className="p-4">
+                {chat.map((message) => (
+                  <div key={message.id}>
+                    {message.name}: {message.message}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          )}
+        </Suspense>
+        <Input
+          className="mt-4 max-w-sm"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <div className="flex 1-full items-start space-x-2 my-4">
+          <Textarea
+            className=" max-h-[100px]"
+            placeholder="Type your message here."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                postChatMessage();
+              }
+            }}
           />
-        )}
-        {!loading && (
-          <>
-            <div>
-              <ScrollArea
-                style={{ height: `${screenHeight - 250}px` }}
-                className={"w-100 rounded-md border"}
-              >
-                <div className="p-4">
-                  {chat.map((message) => (
-                    <div key={message.id}>
-                      {message.name}: {message.message}
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-            </div>
-            <Input
-              className="mt-4 max-w-sm"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <div className="flex 1-full items-start space-x-2 my-4">
-              <Textarea
-                className=" max-h-[100px]"
-                placeholder="Type your message here."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    postChatMessage();
-                  }
-                }}
-              />
-              <Button type="submit" onClick={() => postChatMessage()}>
-                Send
-              </Button>
-            </div>
-          </>
-        )}
+          <Button type="submit" onClick={() => postChatMessage()}>
+            Send
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -165,7 +170,7 @@ const Chat = () => {
   let content = loader;
   if (!loading) content = chatComp;
 
-  return <Suspense fallback={loader}>{content}</Suspense>;
+  return content;
 };
 
 export default Chat;
