@@ -100,7 +100,7 @@ const Chat = () => {
   const loader = (
     <div className="flex-1 flex flex-col justify-center h-full w-full py-6">
       <Loader
-        label={loading ? "Loading" : "Resizing"}
+        label={"44444444"}
         spinnerSize={100}
         labelSize="xl"
       />
