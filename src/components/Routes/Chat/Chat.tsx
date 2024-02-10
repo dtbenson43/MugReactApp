@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import {
   GetMessagesByChannelQuery,
@@ -8,19 +9,10 @@ import {
   useGetMessagesByChannelQuery,
   useSubscribeToChannelSubscription,
 } from "@/gql/types-and-hooks";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
-
 const Chat = () => {
-  const ScrollArea = lazy(() =>
-    import("@/components/ui/scroll-area").then((module) => ({
-      default: module.ScrollArea,
-    }))
-  );
-
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
-  const [gettingHeight, setGettingHeight] = useState(true);
   // const [loading, setLoading] = useState(false);
   const [chat, setChat] = useState<GetMessagesByChannelQuery["chat"]>([]);
   const [name, setName] = useState("");
@@ -56,21 +48,12 @@ const Chat = () => {
 
   useEffect(() => {
     // Function to update the state with the current window height
-    let debounce: NodeJS.Timeout = null!;
     const handleResize = () => {
-      setGettingHeight(true);
-      clearTimeout(debounce);
-      debounce = setTimeout(() => {
-        setScreenHeight(window.innerHeight);
-        setGettingHeight(false);
-      }, 300);
+      setScreenHeight(window.innerHeight);
     };
 
     // Add the event listener for the resize event
     window.addEventListener("resize", handleResize);
-
-    setScreenHeight(window.innerHeight);
-    setGettingHeight(false);
 
     // Clean-up function to remove the event listener
     return () => {
@@ -101,45 +84,21 @@ const Chat = () => {
     </div>
   );
 
-  const resizeFallback = (
-    <div
-      className={`flex-1 h-[${
-        Math.max(screenHeight, 500) - 250
-      }px] w-full border rounded-md overflow-hidden`}
-    >
-      <Skeleton className="mb-2 mt-6 mx-4 h-4 w-[200px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[310px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[240px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[330px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[320px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[250px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[200px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[290px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[240px]" />
-      <Skeleton className="my-2 mx-4 h-4 w-[300px]" />
-    </div>
-  );
-
   const chatComp = (
     <>
       <div className="flex-1 flex flex-col h-full w-full py-6">
-        <Suspense fallback={resizeFallback}>
-          {gettingHeight && resizeFallback}
-          {!gettingHeight && (
-            <ScrollArea
-              style={{ height: `${Math.max(screenHeight, 500) - 250}px` }}
-              className={"w-100 rounded-md border"}
-            >
-              <div className="p-4">
-                {chat.map((message) => (
-                  <div key={message.id}>
-                    {message.name}: {message.message}
-                  </div>
-                ))}
+        <ScrollArea
+          style={{ height: `${Math.max(screenHeight, 500) - 250}px` }}
+          className={"w-100 rounded-md border"}
+        >
+          <div className="p-4">
+            {chat.map((message) => (
+              <div key={message.id}>
+                {message.name}: {message.message}
               </div>
-            </ScrollArea>
-          )}
-        </Suspense>
+            ))}
+          </div>
+        </ScrollArea>
         <Input
           className="mt-4 max-w-sm"
           placeholder="Name"
