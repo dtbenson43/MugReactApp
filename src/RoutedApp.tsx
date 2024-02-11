@@ -23,10 +23,10 @@ const indexRoute = new Route({
   getParentRoute: () => App,
   path: "/",
   component: () => {
-    const About = lazy(() => import("./components/Routes/About/About.tsx"));
+    const Home = lazy(() => import("./components/Routes/Home/Home.tsx"));
     return (
       <Suspense fallback={loader}>
-        <About />
+        <Home />
       </Suspense>
     );
   },

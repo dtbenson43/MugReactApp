@@ -68,6 +68,11 @@ const Chat = () => {
       return;
     }
 
+    if (!message || !message.trim()) {
+      toast.error("no message");
+      return;
+    }
+
     if (message && message.trim()) {
       try {
         await addChatMessage({ variables: { channel: "test", name, message } });
