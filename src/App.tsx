@@ -2,10 +2,7 @@ import { Auth0ContextInterface, User } from "@auth0/auth0-react";
 import "./App.css";
 import Header from "./components/ui/header";
 import { Toaster } from "./components/ui/sonner";
-import {
-  Outlet,
-  rootRouteWithContext,
-} from "@tanstack/react-router";
+import { Outlet, rootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import SideMenu from "./components/ui/sidemenu";
 
@@ -21,9 +18,7 @@ const App = rootRouteWithContext<RouterContext>()({
       <>
         <div className="relative flex flex-col min-h-screen bg-background">
           <Header />
-          <main className="container px-6 flex-1 flex flex-col">
-            <Outlet />
-          </main>
+          <Outlet />
         </div>
         <SideMenu />
         <Toaster position="bottom-center" />

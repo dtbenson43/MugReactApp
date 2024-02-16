@@ -21,7 +21,7 @@ import useApiClients from "@/components/Providers/DataProvider/useApiClients";
 const Choose = () => {
   const ChooseLoad = lazy(() => import("./ChooseLoad"));
   const ChoosePlay = lazy(() => import("./ChoosePlay"));
-  
+
   const [loading, setLoading] = useState<boolean>(false);
   const [chooseGames, setChooseGames] = useState<
     GetChooseGamesByUserIdQuery["chooseGames"]
@@ -135,7 +135,6 @@ const Choose = () => {
     </div>
   );
 
-
   const choosePlay = (
     <div className="py-6">
       <ChoosePlay
@@ -152,15 +151,17 @@ const Choose = () => {
   // play game
   if (!loading && !authIsLoading && currentGame && isAuthenticated)
     content = choosePlay;
-
   // load game if no current game
   else if (!loading && !authIsLoading && !currentGame && isAuthenticated)
     content = chooseLoad;
-
   else if (!loading && !authIsLoading && !isAuthenticated)
     content = <span className="flex justify-center">Must be logged in.</span>;
 
-  return <Suspense fallback={loader}>{content}</Suspense>;
+  return (
+    <main className="container px-6 flex-1 flex flex-col">
+      <Suspense fallback={loader}>{content}</Suspense>
+    </main>
+  );
 };
 
 export default Choose;

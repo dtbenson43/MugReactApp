@@ -134,7 +134,9 @@ const Chat = () => {
   let content = loader;
   if (!loading) content = chatComp;
 
-  return content;
+  return (
+    <main className="container px-6 flex-1 flex flex-col">{content} </main>
+  );
 };
 
 export default Chat;

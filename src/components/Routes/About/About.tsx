@@ -2,9 +2,10 @@ import Markdown from "react-markdown";
 
 const About = () => {
   return (
-    <div className="flex justify-center">
-      <Markdown className="prose lg:prose-xl dark:prose-invert py-6">
-        {`### **Novustoria** 
+    <main className="container px-6 flex-1 flex flex-col">
+      <div className="flex justify-center">
+        <Markdown className="prose lg:prose-xl dark:prose-invert py-6">
+          {`### **Novustoria** 
 #### *\[no-vus-to-ri-a\]*
 **Noun**
 
@@ -26,8 +27,9 @@ Derived from the Latin words *"novus"* (new) and *"historia"* (history or story)
 "After years of adhering to a predetermined path, he embraced a moment of *novustoria*, deciding to embark on a journey around the world to rewrite his own story."
 
 ---`}
-      </Markdown>
-    </div>
+        </Markdown>
+      </div>
+    </main>
   );
 };
 
