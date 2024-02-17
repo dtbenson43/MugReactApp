@@ -101,6 +101,24 @@ export type ChooseGameBranch = {
   userChoice?: Maybe<UserChoiceOption>;
 };
 
+export type CombinationInput = {
+  one: Scalars['String']['input'];
+  two: Scalars['String']['input'];
+};
+
+export type CombinationPayload = {
+  __typename?: 'CombinationPayload';
+  getCombinationPayload?: Maybe<GetCombinationPayload>;
+};
+
+export type CombinationResult = {
+  __typename?: 'CombinationResult';
+  elementOne: Scalars['String']['output'];
+  elementTwo: Scalars['String']['output'];
+  hash: Scalars['String']['output'];
+  result: Scalars['String']['output'];
+};
+
 export type ConversationMessage = {
   __typename?: 'ConversationMessage';
   conversationId: Scalars['String']['output'];
@@ -126,11 +144,17 @@ export type GetChatResponsePayload = {
   chatResult?: Maybe<Scalars['String']['output']>;
 };
 
+export type GetCombinationPayload = {
+  __typename?: 'GetCombinationPayload';
+  combinationResult: CombinationResult;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addChatMessage: AddChatMessagePayload;
   addUserSelection: AddUserSelectionPayload;
   chatResponse: ChatResponsePayload;
+  combination: CombinationPayload;
   createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
 };
@@ -148,6 +172,11 @@ export type MutationAddUserSelectionArgs = {
 
 export type MutationChatResponseArgs = {
   input: ChatResponseInput;
+};
+
+
+export type MutationCombinationArgs = {
+  input: CombinationInput;
 };
 
 
@@ -432,6 +461,14 @@ export type AddUserSelectionMutationVariables = Exact<{
 
 
 export type AddUserSelectionMutation = { __typename?: 'Mutation', addUserSelection: { __typename?: 'AddUserSelectionPayload', updatedGame: { __typename?: 'ChooseGame', id: string, userId: string, title: string, createdAt: any, lastAccessed: any, currentBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, previousBranch?: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } } | null, initialBranch: { __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }, branches: Array<{ __typename?: 'ChooseGameBranch', id: string, text: string, createdAt: any, userChoice?: UserChoiceOption | null, firstOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string }, secondOption: { __typename?: 'ChoiceOption', text: string, nextBranchId: string } }> } } };
+
+export type GetCombinationResultMutationVariables = Exact<{
+  one: Scalars['String']['input'];
+  two: Scalars['String']['input'];
+}>;
+
+
+export type GetCombinationResultMutation = { __typename?: 'Mutation', combination: { __typename?: 'CombinationPayload', getCombinationPayload?: { __typename?: 'GetCombinationPayload', combinationResult: { __typename?: 'CombinationResult', hash: string, elementOne: string, elementTwo: string, result: string } } | null } };
 
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -859,6 +896,47 @@ export function useAddUserSelectionMutation(baseOptions?: Apollo.MutationHookOpt
 export type AddUserSelectionMutationHookResult = ReturnType<typeof useAddUserSelectionMutation>;
 export type AddUserSelectionMutationResult = Apollo.MutationResult<AddUserSelectionMutation>;
 export type AddUserSelectionMutationOptions = Apollo.BaseMutationOptions<AddUserSelectionMutation, AddUserSelectionMutationVariables>;
+export const GetCombinationResultDocument = gql`
+    mutation GetCombinationResult($one: String!, $two: String!) {
+  combination(input: {one: $one, two: $two}) {
+    getCombinationPayload {
+      combinationResult {
+        hash
+        elementOne
+        elementTwo
+        result
+      }
+    }
+  }
+}
+    `;
+export type GetCombinationResultMutationFn = Apollo.MutationFunction<GetCombinationResultMutation, GetCombinationResultMutationVariables>;
+
+/**
+ * __useGetCombinationResultMutation__
+ *
+ * To run a mutation, you first call `useGetCombinationResultMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetCombinationResultMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getCombinationResultMutation, { data, loading, error }] = useGetCombinationResultMutation({
+ *   variables: {
+ *      one: // value for 'one'
+ *      two: // value for 'two'
+ *   },
+ * });
+ */
+export function useGetCombinationResultMutation(baseOptions?: Apollo.MutationHookOptions<GetCombinationResultMutation, GetCombinationResultMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetCombinationResultMutation, GetCombinationResultMutationVariables>(GetCombinationResultDocument, options);
+      }
+export type GetCombinationResultMutationHookResult = ReturnType<typeof useGetCombinationResultMutation>;
+export type GetCombinationResultMutationResult = Apollo.MutationResult<GetCombinationResultMutation>;
+export type GetCombinationResultMutationOptions = Apollo.BaseMutationOptions<GetCombinationResultMutation, GetCombinationResultMutationVariables>;
 export const GetConversationsDocument = gql`
     query GetConversations {
   conversations {

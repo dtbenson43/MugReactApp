@@ -80,11 +80,25 @@ const chatRoute = new Route({
   },
 });
 
+const InfinichemyRoute = new Route({
+  getParentRoute: () => App,
+  path: "/infinichemy",
+  component: () => {
+    const Infinichemy = lazy(() => import("./components/Routes/Infinichemy/Infinichemy.tsx"));
+    return (
+      <Suspense fallback={loader}>
+        <Infinichemy />
+      </Suspense>
+    );
+  },
+});
+
 const routeTree = App.addChildren([
   indexRoute,
   aboutRoute,
   chooseRoute,
   chatRoute,
+  InfinichemyRoute,
 ]);
 
 const router = new Router({

@@ -1,0 +1,12 @@
+mutation GetCombinationResult($one: String!, $two: String!) {
+  combination(input: { one: $one, two: $two }) {
+    getCombinationPayload {
+      combinationResult {
+        hash
+        elementOne
+        elementTwo
+        result
+      }
+    }
+  }
+}

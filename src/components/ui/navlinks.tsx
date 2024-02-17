@@ -25,13 +25,17 @@ export default function NavLinks() {
       onClick: authCheck,
     },
     {
+      route: "/chat",
+      label: "Chat"
+    },
+    {
+      route: "/infinichemy",
+      label: "Infinichemy",
+    },
+    {
       route: "/about",
       label: "About",
     },
-    {
-      route: "/chat",
-      label: "Chat"
-    }
   ].map((l) => {
     const c = `transition-colors hover:text-foreground/80 text-foreground${
       !matchRoute({ to: l.route }) ? "/60" : ""
