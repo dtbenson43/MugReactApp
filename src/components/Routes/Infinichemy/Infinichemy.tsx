@@ -43,14 +43,14 @@ const Infinichemy = () => {
   const [getCombinationResult] = useGetCombinationResultMutation();
 
   useEffect(() => {
+    let cancelled = false;
     const getCombination = async () => {
       if (elementOne !== null && elementTwo !== null) {
         try {
           const result = await getCombinationResult({
             variables: { one: elementOne, two: elementTwo },
           });
-          setElementOne(null);
-          setElementTwo(null);
+          if (cancelled) throw new Error("timed out");
           const elem =
             result?.data?.combination?.getCombinationPayload?.combinationResult;
           if (elem) {
@@ -64,10 +64,22 @@ const Infinichemy = () => {
           }
         } catch (err) {
           console.log(err);
+        } finally {
+          if (!cancelled) {
+            setElementOne(null);
+            setElementTwo(null);
+          }
         }
       }
     };
-    if (elementOne && elementTwo) getCombination();
+    if (elementOne && elementTwo) {
+      setTimeout(() => {
+        cancelled = true;
+        setElementOne(null);
+        setElementTwo(null);
+      }, 30 * 1000);
+      getCombination();
+    }
   }, [elementOne, elementTwo, getCombinationResult]);
 
   return (
