@@ -44,13 +44,19 @@ const Infinichemy = () => {
 
   useEffect(() => {
     let cancelled = false;
+    let completed = false;
     const getCombination = async () => {
       if (elementOne !== null && elementTwo !== null) {
         try {
           const result = await getCombinationResult({
             variables: { one: elementOne, two: elementTwo },
           });
-          if (cancelled) throw new Error("timed out");
+          if (cancelled) {
+            console.log("cancelled");
+            throw new Error("timed out");
+          } else {
+            completed = true;
+          }
           const elem =
             result?.data?.combination?.getCombinationPayload?.combinationResult;
           if (elem) {
@@ -74,10 +80,12 @@ const Infinichemy = () => {
     };
     if (elementOne && elementTwo) {
       setTimeout(() => {
-        cancelled = true;
-        setElementOne(null);
-        setElementTwo(null);
-      }, 30 * 1000);
+        if (!completed) {
+          cancelled = true;
+          setElementOne(null);
+          setElementTwo(null);
+        }
+      }, 10 * 1000);
       getCombination();
     }
   }, [elementOne, elementTwo, getCombinationResult]);
