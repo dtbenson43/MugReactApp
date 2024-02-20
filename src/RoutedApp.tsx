@@ -84,7 +84,7 @@ const InfinichemyRoute = new Route({
   getParentRoute: () => App,
   path: "/infinichemy",
   component: () => {
-    const Infinichemy = lazy(() => import("./components/Routes/Infinichemy/Infinichemy.tsx"));
+    const Infinichemy = lazy(() => import("./components/Routes/Infinichemy/Infinichemy2.tsx"));
     return (
       <Suspense fallback={loader}>
         <Infinichemy />

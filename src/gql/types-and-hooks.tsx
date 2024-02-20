@@ -130,6 +130,16 @@ export type ConversationMessage = {
   userId: Scalars['String']['output'];
 };
 
+export type CreateInfCombinationInput = {
+  one: Scalars['String']['input'];
+  two: Scalars['String']['input'];
+};
+
+export type CreateInfCombinationPayload = {
+  __typename?: 'CreateInfCombinationPayload';
+  infCombination: InfCombination;
+};
+
 export type CreateNewGameInput = {
   userId: Scalars['String']['input'];
 };
@@ -149,12 +159,29 @@ export type GetCombinationPayload = {
   combinationResult: CombinationResult;
 };
 
+export type InfCombination = {
+  __typename?: 'InfCombination';
+  combinationId: Scalars['String']['output'];
+  elementOne: Scalars['String']['output'];
+  elementTwo: Scalars['String']['output'];
+  resultElement: InfElement;
+  resultElementId: Scalars['String']['output'];
+};
+
+export type InfElement = {
+  __typename?: 'InfElement';
+  elementId: Scalars['String']['output'];
+  emoji: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addChatMessage: AddChatMessagePayload;
   addUserSelection: AddUserSelectionPayload;
   chatResponse: ChatResponsePayload;
   combination: CombinationPayload;
+  createInfCombination: CreateInfCombinationPayload;
   createNewGame: CreateNewGamePayload;
   updateZugBobRegistry: UpdateZugBobRegistryPayload;
 };
@@ -180,6 +207,11 @@ export type MutationCombinationArgs = {
 };
 
 
+export type MutationCreateInfCombinationArgs = {
+  input: CreateInfCombinationInput;
+};
+
+
 export type MutationCreateNewGameArgs = {
   input: CreateNewGameInput;
 };
@@ -194,6 +226,7 @@ export type Query = {
   chat: Array<ChatMessage>;
   chooseGames: Array<ChooseGame>;
   conversations: Array<ConversationMessage>;
+  infCombination: InfCombination;
   me: Scalars['String']['output'];
   simpleTest: Scalars['String']['output'];
   test: Scalars['String']['output'];
@@ -218,6 +251,11 @@ export type QueryChooseGamesArgs = {
 export type QueryConversationsArgs = {
   order?: InputMaybe<Array<Cosmos_ConversationMessageSortInput>>;
   where?: InputMaybe<Cosmos_ConversationMessageFilterInput>;
+};
+
+
+export type QueryInfCombinationArgs = {
+  combinationId: Scalars['String']['input'];
 };
 
 export type Subscription = {
@@ -469,6 +507,21 @@ export type GetCombinationResultMutationVariables = Exact<{
 
 
 export type GetCombinationResultMutation = { __typename?: 'Mutation', combination: { __typename?: 'CombinationPayload', getCombinationPayload?: { __typename?: 'GetCombinationPayload', combinationResult: { __typename?: 'CombinationResult', hash: string, elementOne: string, elementTwo: string, result: string } } | null } };
+
+export type GetInfCombinationQueryVariables = Exact<{
+  combinationId: Scalars['String']['input'];
+}>;
+
+
+export type GetInfCombinationQuery = { __typename?: 'Query', infCombination: { __typename?: 'InfCombination', resultElement: { __typename?: 'InfElement', elementId: string, name: string, emoji: string } } };
+
+export type CreateInfCombinationMutationVariables = Exact<{
+  one: Scalars['String']['input'];
+  two: Scalars['String']['input'];
+}>;
+
+
+export type CreateInfCombinationMutation = { __typename?: 'Mutation', createInfCombination: { __typename?: 'CreateInfCombinationPayload', infCombination: { __typename?: 'InfCombination', resultElement: { __typename?: 'InfElement', elementId: string, name: string, emoji: string } } } };
 
 export type GetConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -937,6 +990,90 @@ export function useGetCombinationResultMutation(baseOptions?: Apollo.MutationHoo
 export type GetCombinationResultMutationHookResult = ReturnType<typeof useGetCombinationResultMutation>;
 export type GetCombinationResultMutationResult = Apollo.MutationResult<GetCombinationResultMutation>;
 export type GetCombinationResultMutationOptions = Apollo.BaseMutationOptions<GetCombinationResultMutation, GetCombinationResultMutationVariables>;
+export const GetInfCombinationDocument = gql`
+    query GetInfCombination($combinationId: String!) {
+  infCombination(combinationId: $combinationId) {
+    resultElement {
+      elementId
+      name
+      emoji
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetInfCombinationQuery__
+ *
+ * To run a query within a React component, call `useGetInfCombinationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInfCombinationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInfCombinationQuery({
+ *   variables: {
+ *      combinationId: // value for 'combinationId'
+ *   },
+ * });
+ */
+export function useGetInfCombinationQuery(baseOptions: Apollo.QueryHookOptions<GetInfCombinationQuery, GetInfCombinationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInfCombinationQuery, GetInfCombinationQueryVariables>(GetInfCombinationDocument, options);
+      }
+export function useGetInfCombinationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInfCombinationQuery, GetInfCombinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInfCombinationQuery, GetInfCombinationQueryVariables>(GetInfCombinationDocument, options);
+        }
+export function useGetInfCombinationSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetInfCombinationQuery, GetInfCombinationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetInfCombinationQuery, GetInfCombinationQueryVariables>(GetInfCombinationDocument, options);
+        }
+export type GetInfCombinationQueryHookResult = ReturnType<typeof useGetInfCombinationQuery>;
+export type GetInfCombinationLazyQueryHookResult = ReturnType<typeof useGetInfCombinationLazyQuery>;
+export type GetInfCombinationSuspenseQueryHookResult = ReturnType<typeof useGetInfCombinationSuspenseQuery>;
+export type GetInfCombinationQueryResult = Apollo.QueryResult<GetInfCombinationQuery, GetInfCombinationQueryVariables>;
+export const CreateInfCombinationDocument = gql`
+    mutation CreateInfCombination($one: String!, $two: String!) {
+  createInfCombination(input: {one: $one, two: $two}) {
+    infCombination {
+      resultElement {
+        elementId
+        name
+        emoji
+      }
+    }
+  }
+}
+    `;
+export type CreateInfCombinationMutationFn = Apollo.MutationFunction<CreateInfCombinationMutation, CreateInfCombinationMutationVariables>;
+
+/**
+ * __useCreateInfCombinationMutation__
+ *
+ * To run a mutation, you first call `useCreateInfCombinationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateInfCombinationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createInfCombinationMutation, { data, loading, error }] = useCreateInfCombinationMutation({
+ *   variables: {
+ *      one: // value for 'one'
+ *      two: // value for 'two'
+ *   },
+ * });
+ */
+export function useCreateInfCombinationMutation(baseOptions?: Apollo.MutationHookOptions<CreateInfCombinationMutation, CreateInfCombinationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateInfCombinationMutation, CreateInfCombinationMutationVariables>(CreateInfCombinationDocument, options);
+      }
+export type CreateInfCombinationMutationHookResult = ReturnType<typeof useCreateInfCombinationMutation>;
+export type CreateInfCombinationMutationResult = Apollo.MutationResult<CreateInfCombinationMutation>;
+export type CreateInfCombinationMutationOptions = Apollo.BaseMutationOptions<CreateInfCombinationMutation, CreateInfCombinationMutationVariables>;
 export const GetConversationsDocument = gql`
     query GetConversations {
   conversations {

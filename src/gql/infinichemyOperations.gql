@@ -10,3 +10,26 @@ mutation GetCombinationResult($one: String!, $two: String!) {
     }
   }
 }
+
+query GetInfCombination($combinationId: String!) {
+  infCombination(combinationId: $combinationId) {
+    resultElement {
+      elementId
+      name
+      emoji
+    }
+  }
+}
+
+
+mutation CreateInfCombination($one: String!, $two: String!) {
+  createInfCombination(input: { one: $one, two: $two }) {
+    infCombination {
+      resultElement {
+        elementId
+        name
+        emoji
+      }
+    }
+  }
+}
