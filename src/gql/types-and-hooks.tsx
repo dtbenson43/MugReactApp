@@ -226,7 +226,7 @@ export type Query = {
   chat: Array<ChatMessage>;
   chooseGames: Array<ChooseGame>;
   conversations: Array<ConversationMessage>;
-  infCombination: InfCombination;
+  infCombination?: Maybe<InfCombination>;
   me: Scalars['String']['output'];
   simpleTest: Scalars['String']['output'];
   test: Scalars['String']['output'];
@@ -513,7 +513,7 @@ export type GetInfCombinationQueryVariables = Exact<{
 }>;
 
 
-export type GetInfCombinationQuery = { __typename?: 'Query', infCombination: { __typename?: 'InfCombination', resultElement: { __typename?: 'InfElement', elementId: string, name: string, emoji: string } } };
+export type GetInfCombinationQuery = { __typename?: 'Query', infCombination?: { __typename?: 'InfCombination', resultElement: { __typename?: 'InfElement', elementId: string, name: string, emoji: string } } | null };
 
 export type CreateInfCombinationMutationVariables = Exact<{
   one: Scalars['String']['input'];
